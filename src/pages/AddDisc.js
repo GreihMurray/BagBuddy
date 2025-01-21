@@ -2,11 +2,11 @@ import { Button, Text, TextInput, View } from "react-native";
 import BottomTab from "../components/BottomTab";
 import Header from "../components/Header";
 import TextboxWithLabel from "../components/TextBoxWithLabel";
-import { useRef, useState } from "react";
-import { ColorPicker } from "react-native-color-picker";
+import { useEffect, useRef, useState } from "react";
+import { ColorPicker, toHsv } from "react-native-color-picker";
 import { getJsonData, setJsonData } from "../utils/StorageUtils";
 
-export default function AddDisc({navigation}){
+export default function AddDisc({navigation, route}){
     const colorPickerRef = useRef(null)
 
     const [discName, setDiscName] = useState("")
@@ -17,6 +17,22 @@ export default function AddDisc({navigation}){
     const [fade, setFade] = useState("")
     const [color, setColor] = useState("")
     const [notes, setNotes] = useState("")
+    const [discKey, setDiscKey] = useState("")
+
+    useEffect(() => {
+        if(route?.params?.disc && discName == ""){
+            let disc = route?.params?.disc
+            setDiscName(disc?.name)
+            setManufacturer(disc.manufacturer)
+            setSpeed(disc.speed)
+            setGlide(disc?.glide)
+            setTurn(disc?.turn)
+            setFade(disc?.fade)
+            setColor(disc?.color)
+            setNotes(disc?.notes)
+            setDiscKey(route?.params?.key)
+        }
+    }, [route])
 
     const addDisc = async () => {
         let disc = {
@@ -30,20 +46,17 @@ export default function AddDisc({navigation}){
             notes: notes
         }
 
-        let discs = await getJsonData("all-discs")
-        let timeStamp = new Date().getTime();
+        let allDiscs = await getJsonData("all-discs")
+        let key = discKey != "" ? discKey : new Date().getTime();
 
-        discs = {
+        allDiscs = {
             discs: {
-                [timeStamp]: {...disc},
-                ...discs?.discs
+                ...allDiscs?.discs,
+                [key]: {...disc},
             }
         }
 
-        console.log(discs)
-        console.log(disc)
-
-        await setJsonData("all-discs", discs)
+        await setJsonData("all-discs", allDiscs)
 
         navigation.navigate("Discs")
     }
@@ -60,13 +73,13 @@ export default function AddDisc({navigation}){
                 <TextboxWithLabel 
                     label={"Manufacturer"}
                     setValue={setManufacturer}
-                    value={discName}
+                    value={manufacturer}
                 />
                 <View style={{flexDirection: "row"}}>
                     <TextboxWithLabel 
                         label={"Speed"}
                         setValue={setSpeed}
-                        value={discName}
+                        value={speed}
                         inputMode={"numeric"}
                         labelStyle={{
                             marginLeft: "auto",
@@ -89,7 +102,7 @@ export default function AddDisc({navigation}){
                         label={"Glide"}
                         inputMode={"numeric"}
                         setValue={setGlide}
-                        value={discName}
+                        value={glide}
                         inputStyle={{width: "100%", textAlign: "center"}}
                         labelStyle={{
                             marginLeft: "auto",
@@ -111,7 +124,7 @@ export default function AddDisc({navigation}){
                         label={"Turn"}
                         inputMode={"numeric"}
                         setValue={setTurn}
-                        value={discName}
+                        value={turn}
                         inputStyle={{width: "100%", textAlign: "center"}}
                         labelStyle={{
                             marginLeft: "auto",
@@ -133,7 +146,7 @@ export default function AddDisc({navigation}){
                         label={"Fade"}
                         inputMode={"numeric"}
                         setValue={setFade}
-                        value={discName}
+                        value={fade}
                         inputStyle={{width: "100%", textAlign: "center"}}
                         labelStyle={{
                             marginLeft: "auto",
@@ -148,6 +161,7 @@ export default function AddDisc({navigation}){
                 <ColorPicker
                     ref={colorPickerRef}
                     onColorChange={(color) => setColor(color)}
+                    color={color}
                     style={{
                         width: 200,
                         height: 200,
@@ -163,6 +177,7 @@ export default function AddDisc({navigation}){
                     maxLength={300}
                     onChangeText={(e) => setNotes(e.target.value)}
                     numberOfLines={8}
+                    value={notes}
                     style={{
                         height: "20%",
                         borderWidth: 2,

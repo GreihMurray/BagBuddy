@@ -1,4 +1,5 @@
-import { Button, Text, View } from "react-native";
+import { Button, Pressable, Text, View } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function Header({title, showButton=false, buttonMethod, buttonText}){
     return (
@@ -20,22 +21,26 @@ export default function Header({title, showButton=false, buttonMethod, buttonTex
             {
                 showButton 
                 && 
-                <View style={{
-                    width: "fit-content",
-                    marginRight: "0px",
-                    marginLeft: "auto",
-                }}>
-                    <Button 
-                        title={buttonText}
-                        style={{
-                            width: 10,
-                            marginRight: 0, 
-                            marginLeft: "auto"
-                        }}
+                <Pressable style={{marginRight: "5%", marginTop: "1%", marginLeft: "auto"}} onPress={buttonMethod}>
+                    <AntDesign name="pluscircle" size={30}/>
+                </Pressable>
+                
+                // <View style={{
+                //     width: "fit-content",
+                //     marginRight: "0px",
+                //     marginLeft: "auto",
+                // }}>
+                //     <Button 
+                //         title={buttonText}
+                //         style={{
+                //             width: 10,
+                //             marginRight: 0, 
+                //             marginLeft: "auto"
+                //         }}
                         
-                        onPress={buttonMethod}
-                    />
-                </View>
+                //         onPress={buttonMethod}
+                //     />
+                // </View>
             }
             
         </View>
