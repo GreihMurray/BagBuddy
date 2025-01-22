@@ -1,4 +1,5 @@
-import { Button, Text, TextInput, View } from "react-native";
+import { Button, TextInput, View } from "react-native";
+import Text from "../components/Text";
 import BottomTab from "../components/BottomTab";
 import Header from "../components/Header";
 import TextboxWithLabel from "../components/TextBoxWithLabel";
@@ -31,6 +32,8 @@ export default function AddDisc({navigation, route}){
             setColor(disc?.color)
             setNotes(disc?.notes)
             setDiscKey(route?.params?.key)
+        } else{
+            setColor(toHsv("#22AA22"))
         }
     }, [route])
 
@@ -95,9 +98,8 @@ export default function AddDisc({navigation, route}){
                             fontSize: 48,
                             marginTop: "2%"
                         }}
-                    >
-                        |
-                    </Text>
+                        text="|"
+                    />
                     <TextboxWithLabel 
                         label={"Glide"}
                         inputMode={"numeric"}
@@ -117,9 +119,8 @@ export default function AddDisc({navigation, route}){
                             fontSize: 48,
                             marginTop: "2%"
                         }}
-                    >
-                        |
-                    </Text>
+                        text="|"
+                    />
                     <TextboxWithLabel 
                         label={"Turn"}
                         inputMode={"numeric"}
@@ -139,9 +140,8 @@ export default function AddDisc({navigation, route}){
                             fontSize: 48,
                             marginTop: "2%"
                         }}
-                    >
-                        |
-                    </Text>
+                        text="|"
+                    />
                     <TextboxWithLabel 
                         label={"Fade"}
                         inputMode={"numeric"}
@@ -157,7 +157,7 @@ export default function AddDisc({navigation, route}){
                         }}
                     />
                 </View>
-                <Text style={{marginRight: "auto", marginLeft: "auto", marginTop: 20}}>Disc Color</Text>
+                <Text style={{marginRight: "auto", marginLeft: "auto", marginTop: 20}} text="Disc Color" />
                 <ColorPicker
                     ref={colorPickerRef}
                     onColorChange={(color) => setColor(color)}
@@ -171,7 +171,7 @@ export default function AddDisc({navigation, route}){
                         marginLeft: "auto"
                     }}
                 />
-                <Text>Notes</Text>
+                <Text text={"Notes"}/>
                 <TextInput
                     multiline
                     maxLength={300}

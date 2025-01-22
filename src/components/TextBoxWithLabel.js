@@ -1,9 +1,10 @@
-import { Text, TextInput, View } from "react-native"
+import { TextInput, View } from "react-native"
+import Text from "./Text"
 
 export default function TextboxWithLabel({setValue, label, value, labelStyle, inputStyle, style, inputMode}){
     return (
         <View style={{flexDirection: "column", ...style}}>
-            <Text style={{...labelStyle}}>{label}</Text>
+            <Text style={{ ...labelStyle}} text={label} />
             <TextInput
                 inputMode={inputMode || "text"}
                 mode="outlined"
@@ -14,6 +15,7 @@ export default function TextboxWithLabel({setValue, label, value, labelStyle, in
                     width: "100%",
                     borderWidth: 1,
                     borderColor: "#D9D9D9",
+                    color: "#FFFFFF",
                     ...inputStyle
                 }}
             />

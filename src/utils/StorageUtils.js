@@ -11,12 +11,11 @@ export async function setJsonData(key, value){
 export async function getJsonData(key){
     try{
         const data = await AsyncStorage.getItem(key).then((result) => {return result})
-        
-        const jsonData = JSON.parse(data)
         if(data != null){
+            const jsonData = JSON.parse(data)
             return jsonData
         } else{
-            return "yoyoyo"
+            return null
         }
     } catch(e){
         console.log("FFFF")
