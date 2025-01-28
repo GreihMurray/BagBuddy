@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { getJsonData, setJsonData } from "../utils/StorageUtils"
 import Header from "../components/Header"
-import { Button, ScrollView, TextInput, View } from "react-native"
+import { Button, Keyboard, ScrollView, TextInput, View } from "react-native"
 import Text from "../components/Text"
 import TextboxWithLabel from "../components/TextBoxWithLabel"
 import { ColorPicker, toHsv } from "react-native-color-picker"
@@ -20,6 +20,8 @@ export default function AddBag({navigation, route}){
     const [discArray, setDiscArray] = useState()
     const [discs, setDiscs] = useState()
 
+    const [keyboardOpen, setKeyboardOpen] = useState(false)
+
     useEffect(() => {
         let bag = route?.params?.bag
 
@@ -36,6 +38,25 @@ export default function AddBag({navigation, route}){
 
     useEffect(() => {
         getDiscs()
+
+        const keyBoardDidShowListener = Keyboard.addListener(
+            "keyboardDidShow",
+            () => {
+                setKeyboardOpen(true)
+            }
+        )
+
+        const keyBoardDidHideListener = Keyboard.addListener(
+            "keyboardDidHide",
+            () => {
+                setKeyboardOpen(false)
+            }
+        )
+
+        return () => {
+            keyBoardDidHideListener.remove()
+            keyBoardDidShowListener.remove()
+        }
     }, [])
 
     const getDiscs = async () => {
@@ -81,7 +102,7 @@ export default function AddBag({navigation, route}){
     return (
         <View style={{height: "100%"}}>
             <Header title={"Add Bag"}/>
-            <ScrollView style={{padding: "5%", overflowY: "auto"}}>
+            <ScrollView contentContainerStyle={{padding: "5%", flexGrow: 1, paddingBottom: "15%"}}>
                 <TextboxWithLabel 
                     label={"Bag Name"}
                     setValue={setBagName}
@@ -130,7 +151,11 @@ export default function AddBag({navigation, route}){
                 />
                 <Button title="Save Bag" onPress={addBag}/>
             </ScrollView>
-            <BottomTab navigation={navigation}/>
+            {
+                !keyboardOpen &&  
+                <BottomTab navigation={navigation}/>
+            }
+            
         </View>
     )
 }

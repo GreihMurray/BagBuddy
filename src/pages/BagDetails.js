@@ -34,7 +34,7 @@ export default function BagDetails({navigation, route}){
 
             <View style={{flexDirection: "column", margin: "5%", height: "18%"}}>
                 <Text text={"Bag Notes"} style={{fontSize: 20, fontWeight: "bold"}}/>
-                <ScrollView style={{width: "100%", height: "100%", borderWidth: 2, borderColor: "#FFFFFF", padding: "2%"}}>
+                <ScrollView contentContainerStyle={{width: "100%", borderWidth: 2, borderColor: "#FFFFFF", padding: "2%"}}>
                     <Text text={route?.params?.bag?.notes}/>
                 </ScrollView>
             </View>

@@ -1,4 +1,4 @@
-import { Button, TextInput, View } from "react-native";
+import { Button, Keyboard, ScrollView, TextInput, View } from "react-native";
 import Text from "../components/Text";
 import BottomTab from "../components/BottomTab";
 import Header from "../components/Header";
@@ -20,6 +20,8 @@ export default function AddDisc({navigation, route}){
     const [notes, setNotes] = useState("")
     const [discKey, setDiscKey] = useState("")
 
+    const [keyboardOpen, setKeyboardOpen] = useState(false)
+
     useEffect(() => {
         if(route?.params?.disc && discName == ""){
             let disc = route?.params?.disc
@@ -36,6 +38,27 @@ export default function AddDisc({navigation, route}){
             setColor(toHsv("#22AA22"))
         }
     }, [route])
+
+    useEffect(() => {
+        const keyBoardDidShowListener = Keyboard.addListener(
+            "keyboardDidShow",
+            () => {
+                setKeyboardOpen(true)
+            }
+        )
+
+        const keyBoardDidHideListener = Keyboard.addListener(
+            "keyboardDidHide",
+            () => {
+                setKeyboardOpen(false)
+            }
+        )
+
+        return () => {
+            keyBoardDidHideListener.remove()
+            keyBoardDidShowListener.remove()
+        }
+    }, [])
 
     const addDisc = async () => {
         let disc = {
@@ -65,9 +88,9 @@ export default function AddDisc({navigation, route}){
     }
 
     return (
-        <>
+        <View style={{height: "100%"}}>
             <Header title={"Add Disc"}/>
-            <View style={{padding: "5%", overflowY: "auto"}}>
+            <ScrollView contentContainerStyle={{padding: "5%", flexGrow: 1, paddingBottom: "20%"}}>
                 <TextboxWithLabel 
                     label={"Disc Name"}
                     setValue={setDiscName}
@@ -182,11 +205,14 @@ export default function AddDisc({navigation, route}){
                         height: "20%",
                         borderWidth: 2,
                         borderColor: "#D9D9D9",
+                        verticalAlign: "top"
                     }}
                 />
                 <Button title="Save Disc" onPress={addDisc}/>
-            </View>
-            <BottomTab navigation={navigation}/>
-        </>
+            </ScrollView>
+            {
+                !keyboardOpen && <BottomTab navigation={navigation}/> 
+            }
+        </View>
     )
 }
