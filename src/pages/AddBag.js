@@ -117,13 +117,15 @@ export default function AddBag({navigation, route}){
                 <TextInput
                     multiline
                     maxLength={300}
-                    onChangeText={(e) => setNotes(e.target.value)}
+                    onChangeText={(value) => setNotes(value)}
                     numberOfLines={8}
                     value={notes}
                     style={{
                         height: "20%",
                         borderWidth: 2,
                         borderColor: "#D9D9D9",
+                        color: "#FFFFFF",
+                        verticalAlign: "top"
                     }}
                 />
                 <Button title="Save Bag" onPress={addBag}/>

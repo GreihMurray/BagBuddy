@@ -175,7 +175,7 @@ export default function AddDisc({navigation, route}){
                 <TextInput
                     multiline
                     maxLength={300}
-                    onChangeText={(e) => setNotes(e.target.value)}
+                    onChangeText={(value) => setNotes(value)}
                     numberOfLines={8}
                     value={notes}
                     style={{

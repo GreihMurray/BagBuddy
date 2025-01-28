@@ -31,6 +31,14 @@ export default function BagDetails({navigation, route}){
             <Header title={route?.params?.bag?.name} showButton={true}
                 buttonMethod={editBag} 
                 buttonIcon={<Entypo name="edit" size={30} color={"#FFF"}/>}/>
+
+            <View style={{flexDirection: "column", margin: "5%", height: "18%"}}>
+                <Text text={"Bag Notes"} style={{fontSize: 20, fontWeight: "bold"}}/>
+                <ScrollView style={{width: "100%", height: "100%", borderWidth: 2, borderColor: "#FFFFFF", padding: "2%"}}>
+                    <Text text={route?.params?.bag?.notes}/>
+                </ScrollView>
+            </View>
+
             <ScrollView contentContainerStyle={{flexGrow: 1, paddingBottom: "30%", zIndex: 2}}>
             {discs && discs?.map((disc) => {
                     return(
@@ -44,7 +52,7 @@ export default function BagDetails({navigation, route}){
                                 borderRadius: 5,
                                 overflow: "hidden",
                                 marginTop: 5,
-                                height: "10%",
+                                height: "15%",
                                 display: "flex",
                                 flexDirection: "row",
                             }}
