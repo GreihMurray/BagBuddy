@@ -2,7 +2,7 @@ import { Button, Pressable, View } from "react-native";
 import Text from "./Text";
 import { AntDesign } from "@expo/vector-icons";
 
-export default function Header({title, showButton=false, buttonMethod, buttonText}){
+export default function Header({title, showButton=false, buttonMethod, buttonIcon}){
     return (
         <View style={{
                 width: "100%",
@@ -21,25 +21,8 @@ export default function Header({title, showButton=false, buttonMethod, buttonTex
                 showButton 
                 && 
                 <Pressable style={{marginRight: "5%", marginTop: "1%", marginLeft: "auto"}} onPress={buttonMethod}>
-                    <AntDesign name="pluscircle" size={30} color={"#FFFFFF"}/>
+                    {buttonIcon}
                 </Pressable>
-                
-                // <View style={{
-                //     width: "fit-content",
-                //     marginRight: "0px",
-                //     marginLeft: "auto",
-                // }}>
-                //     <Button 
-                //         title={buttonText}
-                //         style={{
-                //             width: 10,
-                //             marginRight: 0, 
-                //             marginLeft: "auto"
-                //         }}
-                        
-                //         onPress={buttonMethod}
-                //     />
-                // </View>
             }
             
         </View>

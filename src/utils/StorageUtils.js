@@ -21,3 +21,36 @@ export async function getJsonData(key){
         console.log("FFFF")
     }
 }
+
+export async function getDiscsInBag(bagKey){
+    try{
+        const data = await AsyncStorage.getItem("all-bags").then((result) => {return result})
+        let bagDiscs = []
+
+        if(data != null){
+            const jsonData = JSON.parse(data).bags
+            let bag = jsonData[bagKey]
+
+            let tempBagDiscs = bag?.discs
+
+            let allDiscsRaw = await AsyncStorage.getItem("all-discs").then((result) => {return result})
+            
+
+            if(allDiscsRaw == null) {
+                return []
+            } else{
+                let allDiscs = JSON.parse(allDiscsRaw)
+
+                for(const disc of tempBagDiscs){
+                    bagDiscs.push(allDiscs?.discs[disc])
+                }
+
+                return bagDiscs
+            }
+        } else {
+            return []
+        }
+    } catch(e) {
+        return []
+    }
+}

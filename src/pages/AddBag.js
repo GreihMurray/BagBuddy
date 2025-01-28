@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 import { getJsonData, setJsonData } from "../utils/StorageUtils"
 import Header from "../components/Header"
-import { Button, TextInput, View } from "react-native"
+import { Button, ScrollView, TextInput, View } from "react-native"
 import Text from "../components/Text"
 import TextboxWithLabel from "../components/TextBoxWithLabel"
 import { ColorPicker, toHsv } from "react-native-color-picker"
 import BottomTab from "../components/BottomTab"
+import MultiSelect from "react-native-multiple-select"
 
 export default function AddBag({navigation, route}){
     const colorPickerRef = useRef(null)
@@ -15,6 +16,10 @@ export default function AddBag({navigation, route}){
     const [notes, setNotes] = useState("")
     const [bagKey, setBagKey] = useState("")
 
+    const [selectedDiscs, setSelectedDiscs] = useState([])
+    const [discArray, setDiscArray] = useState()
+    const [discs, setDiscs] = useState()
+
     useEffect(() => {
         let bag = route?.params?.bag
 
@@ -23,16 +28,37 @@ export default function AddBag({navigation, route}){
             setColor(bag?.color)
             setNotes(bag?.notes)
             setBagKey(bag?.key)
+            setSelectedDiscs(bag?.discs)
         } else{
             setColor(toHsv("#22AA22"))
         }
     }, [route])
 
+    useEffect(() => {
+        getDiscs()
+    }, [])
+
+    const getDiscs = async () => {
+        let temp = await getJsonData("all-discs")
+        setDiscs(temp?.discs)
+        let discArray = []
+
+        for(const [key, value] of Object.entries(temp?.discs)){
+            discArray.push({
+                id: key,
+                ...value
+            })
+        }
+
+        setDiscArray(discArray)
+    }
+
     const addBag = async () => {
         let bag = {
             name: bagName,
             color: color,
-            notes: notes
+            notes: notes,
+            discs: selectedDiscs
         }
 
         let allBags = getJsonData("all-bags")
@@ -53,9 +79,9 @@ export default function AddBag({navigation, route}){
     }
 
     return (
-        <>
+        <View style={{height: "100%"}}>
             <Header title={"Add Bag"}/>
-            <View style={{padding: "5%", overflowY: "auto"}}>
+            <ScrollView style={{padding: "5%", overflowY: "auto"}}>
                 <TextboxWithLabel 
                     label={"Bag Name"}
                     setValue={setBagName}
@@ -76,6 +102,17 @@ export default function AddBag({navigation, route}){
                         marginLeft: "auto"
                     }}
                 />
+
+                <MultiSelect
+                    items={discArray}
+                    uniqueKey="id"
+                    ref={(comp) => this.multiSelect = comp}
+                    selectedItems={selectedDiscs}
+                    selectText="Add discs to bag"
+                    displayKey="name"
+                    onSelectedItemsChange={(e) => setSelectedDiscs(e)}
+                />
+
                 <Text text="Notes"/>
                 <TextInput
                     multiline
@@ -89,9 +126,9 @@ export default function AddBag({navigation, route}){
                         borderColor: "#D9D9D9",
                     }}
                 />
-                <Button title="Add Bag" onPress={addBag}/>
-            </View>
+                <Button title="Save Bag" onPress={addBag}/>
+            </ScrollView>
             <BottomTab navigation={navigation}/>
-        </>
+        </View>
     )
 }

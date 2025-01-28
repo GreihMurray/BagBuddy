@@ -184,7 +184,7 @@ export default function AddDisc({navigation, route}){
                         borderColor: "#D9D9D9",
                     }}
                 />
-                <Button title="Add Disc" onPress={addDisc}/>
+                <Button title="Save Disc" onPress={addDisc}/>
             </View>
             <BottomTab navigation={navigation}/>
         </>

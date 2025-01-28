@@ -5,7 +5,7 @@ import { getJsonData, setJsonData } from "../utils/StorageUtils";
 import { useEffect, useState } from "react";
 import { fromHsv } from "react-native-color-picker";
 import Header from "../components/Header";
-import { Feather } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
 export default function Discs({navigation}){
@@ -43,6 +43,10 @@ export default function Discs({navigation}){
         navigation.navigate("AddDisc", {disc: disc, key: key})
     }
 
+    const viewDiscDetails = (disc, key) => {
+        navigation.navigate("DiscDetails", {disc: disc, key: key})
+    }
+
     const deleteDisc = async (key) => {
         delete discs.discs[key];
 
@@ -52,7 +56,7 @@ export default function Discs({navigation}){
 
     return(
         <View style={{height: "100%"}}>
-            <Header title={"Discs"} showButton={true} buttonMethod={addDisc} buttonText={"Add Disc"}/>
+            <Header title={"Discs"} showButton={true} buttonMethod={addDisc} buttonIcon={<AntDesign name="pluscircle" size={30} color={"#FFFFFF"}/>}/>
             
             <ScrollView contentContainerStyle={{flexGrow: 1, paddingBottom: "30%", zIndex: 2}}>
                 {discs && Object.entries(discs?.discs)?.map(([key, disc]) => {
@@ -71,7 +75,7 @@ export default function Discs({navigation}){
                                 display: "flex",
                                 flexDirection: "row",
                             }]}
-                            onPress={() => editDisc(disc, key)}
+                            onPress={() => viewDiscDetails(disc, key)}
                         >
                             <Image 
                                 style={{

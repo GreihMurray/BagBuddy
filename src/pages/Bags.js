@@ -4,7 +4,7 @@ import { getJsonData, setJsonData } from "../utils/StorageUtils";
 import { useEffect, useState } from "react";
 import { fromHsv } from "react-native-color-picker";
 import Header from "../components/Header";
-import { Feather } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import Text from "../components/Text";
@@ -30,8 +30,8 @@ export default function Bags({navigation}){
         navigation.navigate("AddBag", {bag: bag, key: key})
     }
 
-    const viewBagDetails = (bag) => {
-        navigation.navigate("BagDetails", {bag: bag})
+    const viewBagDetails = (bag, key) => {
+        navigation.navigate("BagDetails", {bag: bag, key: key})
     }
 
     const deleteBag = async (key) => {
@@ -43,7 +43,9 @@ export default function Bags({navigation}){
 
     return(
         <View style={{height: "100%"}}>
-            <Header title={"Bags"} showButton={true} buttonMethod={addBag} buttonText={"Add Bag"}/>
+            <Header title={"Bags"} showButton={true} buttonMethod={addBag} buttonIcon={
+                <AntDesign name="pluscircle" size={30} color={"#FFFFFF"}/>
+            }/>
             
             <ScrollView contentContainerStyle={{flexGrow: 1, paddingBottom: "30%", zIndex: 2}}>
                 {bags && Object.entries(bags?.bags)?.map(([key, bag]) => {
@@ -62,7 +64,7 @@ export default function Bags({navigation}){
                                 display: "flex",
                                 flexDirection: "row",
                             }]}
-                            onPress={() => viewBagDetails(bag)}
+                            onPress={() => viewBagDetails(bag, key)}
                         >
                             <MaterialIcons 
                                 name="backpack" 
