@@ -48,7 +48,9 @@ export default function Bags({navigation}){
             }/>
             
             <ScrollView contentContainerStyle={{flexGrow: 1, paddingBottom: "30%", zIndex: 2}}>
-                {bags && Object.entries(bags?.bags)?.map(([key, bag]) => {
+                {bags == null ? <Text text={"What is this, my DMs? \n\nWhy is it empty? Add a Bag"} style={{margin: "auto", fontSize: 36, width: "80%", textAlign: "center"}}/>
+                :
+                Object.entries(bags?.bags)?.map(([key, bag]) => {
                     return(
                         <Pressable 
                             key={key}

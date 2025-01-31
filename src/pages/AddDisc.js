@@ -12,6 +12,8 @@ export default function AddDisc({navigation, route}){
 
     const [discName, setDiscName] = useState("")
     const [manufacturer, setManufacturer] = useState("")
+    const [plastic, setPlastic] = useState("")
+    const [weight, setWeight] = useState("")
     const [speed, setSpeed] = useState("")
     const [glide, setGlide] = useState("")
     const [turn, setTurn] = useState("")
@@ -33,6 +35,8 @@ export default function AddDisc({navigation, route}){
             setFade(disc?.fade)
             setColor(disc?.color)
             setNotes(disc?.notes)
+            setWeight(disc?.weight)
+            setPlastic(disc?.plastic)
             setDiscKey(route?.params?.key)
         } else{
             setColor(toHsv("#22AA22"))
@@ -69,7 +73,9 @@ export default function AddDisc({navigation, route}){
             turn: turn,
             fade: fade,
             color: color,
-            notes: notes
+            notes: notes,
+            plastic: plastic,
+            weight: weight
         }
 
         let allDiscs = await getJsonData("all-discs")
@@ -100,6 +106,17 @@ export default function AddDisc({navigation, route}){
                     label={"Manufacturer"}
                     setValue={setManufacturer}
                     value={manufacturer}
+                />
+                <TextboxWithLabel 
+                    label={"Plastic"}
+                    setValue={setPlastic}
+                    value={plastic}
+                />
+                <TextboxWithLabel 
+                    label={"Weight"}
+                    setValue={setWeight}
+                    inputMode={"numeric"}
+                    value={weight}
                 />
                 <View style={{flexDirection: "row"}}>
                     <TextboxWithLabel 
