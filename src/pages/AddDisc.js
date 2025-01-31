@@ -96,7 +96,7 @@ export default function AddDisc({navigation, route}){
     return (
         <View style={{height: "100%"}}>
             <Header title={"Add Disc"}/>
-            <ScrollView contentContainerStyle={{padding: "5%", flexGrow: 1, paddingBottom: "20%"}}>
+            <ScrollView contentContainerStyle={{padding: "5%", flexGrow: 1, paddingBottom: "40%"}}>
                 <TextboxWithLabel 
                     label={"Disc Name"}
                     setValue={setDiscName}
@@ -222,10 +222,12 @@ export default function AddDisc({navigation, route}){
                         height: "20%",
                         borderWidth: 2,
                         borderColor: "#D9D9D9",
-                        verticalAlign: "top"
+                        verticalAlign: "top",
+                        marginBottom: "5%",
+                        color: "#FFF"
                     }}
                 />
-                <Button title="Save Disc" onPress={addDisc}/>
+                <Button title="Save Disc" onPress={addDisc} style={{marginTop: "5%"}}/>
             </ScrollView>
             {
                 !keyboardOpen && <BottomTab navigation={navigation}/> 
