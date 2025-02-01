@@ -5,7 +5,7 @@ import { Image, ScrollView, View } from "react-native";
 import Text from "../components/Text";
 import { fromHsv } from "react-native-color-picker";
 import BottomTab from "../components/BottomTab";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, FontAwesome6 } from "@expo/vector-icons";
 
 export default function BagDetails({navigation, route}){
     const [discs, setDiscs] = useState()
@@ -23,7 +23,7 @@ export default function BagDetails({navigation, route}){
     const editBag = () => {
         let bag = route?.params?.bag
         let key = route?.params?.key
-        navigation.navigate("AddBag", {bag: bag, key: key})
+        navigation.navigate("AddBag", {bag: bag, key: key, edit: true})
     }
 
     return (
@@ -34,7 +34,7 @@ export default function BagDetails({navigation, route}){
 
             <View style={{flexDirection: "column", margin: "5%", height: "18%"}}>
                 <Text text={"Bag Notes"} style={{fontSize: 20, fontWeight: "bold"}}/>
-                <ScrollView contentContainerStyle={{width: "100%", borderWidth: 2, borderColor: "#FFFFFF", padding: "2%"}}>
+                <ScrollView contentContainerStyle={{width: "100%", borderWidth: 2, borderColor: "#FFFFFF", padding: "2%", height: "100%"}}>
                     <Text text={route?.params?.bag?.notes}/>
                 </ScrollView>
             </View>
@@ -58,18 +58,16 @@ export default function BagDetails({navigation, route}){
                             }}
                             onPress={() => editDisc(disc, key)}
                         >
-                            <Image 
+                            <FontAwesome6
+                                name="compact-disc"
+                                size={48}
+                                color={fromHsv(disc?.color) || "#000"}
                                 style={{
-                                    aspectRatio: "1/1", 
-                                    borderColor: disc?.color ? fromHsv(disc?.color) : "#FF0000",
-                                    overflow: "hidden",
-                                    borderWidth: 5,
-                                    borderRadius: 50,
-                                    flex: 0.7, 
-                                    margin: "auto",
-                                    marginLeft: 5
+                                    marginLeft: "2%",
+                                    marginTop: "auto",
+                                    marginBottom: "auto",
+                                    marginRight: "2%"
                                 }} 
-                                source={require("../../assets/favicon.png")} 
                             />
                             <View style={{flexDirection: "row", flex: 5}}>
                                 <Text 

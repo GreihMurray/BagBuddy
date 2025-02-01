@@ -90,7 +90,12 @@ export default function AddDisc({navigation, route}){
 
         await setJsonData("all-discs", allDiscs)
 
-        navigation.navigate("Discs")
+        let target = "Discs"
+        if(route?.params?.edit){
+            target = "DiscDetails"
+        }
+
+        navigation.navigate(target, {disc: disc, key: key})
     }
 
     return (
@@ -118,7 +123,7 @@ export default function AddDisc({navigation, route}){
                     inputMode={"numeric"}
                     value={weight}
                 />
-                <View style={{flexDirection: "row"}}>
+                <View style={{flexDirection: "row", marginTop: "5%"}}>
                     <TextboxWithLabel 
                         label={"Speed"}
                         setValue={setSpeed}

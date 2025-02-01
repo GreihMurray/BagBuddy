@@ -5,7 +5,7 @@ import { getJsonData, setJsonData } from "../utils/StorageUtils";
 import { useEffect, useState } from "react";
 import { fromHsv } from "react-native-color-picker";
 import Header from "../components/Header";
-import { AntDesign, Feather } from "@expo/vector-icons";
+import { AntDesign, Feather, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
 export default function Discs({navigation}){
@@ -79,18 +79,16 @@ export default function Discs({navigation}){
                             }]}
                             onPress={() => viewDiscDetails(disc, key)}
                         >
-                            <Image 
+                            <FontAwesome6
+                                name="compact-disc"
+                                size={48}
+                                color={fromHsv(disc?.color) || "#000"}
                                 style={{
-                                    aspectRatio: "1/1", 
-                                    borderColor: disc?.color ? fromHsv(disc?.color) : "#FF0000",
-                                    overflow: "hidden",
-                                    borderWidth: 5,
-                                    borderRadius: 50,
-                                    flex: 1, 
-                                    margin: "auto",
-                                    marginLeft: 5
+                                    marginLeft: "2%",
+                                    marginTop: "auto",
+                                    marginBottom: "auto",
+                                    marginRight: "2%"
                                 }} 
-                                source={require("../../assets/favicon.png")} 
                             />
                             <View style={{flexDirection: "column", flex: 5}}>
                                 <Text 

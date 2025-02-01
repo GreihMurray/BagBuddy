@@ -96,7 +96,13 @@ export default function AddBag({navigation, route}){
 
         await setJsonData("all-bags", allBags)
 
-        navigation.navigate("Bags")
+        let target = "Bags"
+
+        if(route?.params?.edit){
+            target = "BagDetails"
+        }
+
+        navigation.navigate(target, {bag: bag, key: key})
     }
 
     return (
@@ -146,10 +152,11 @@ export default function AddBag({navigation, route}){
                         borderWidth: 2,
                         borderColor: "#D9D9D9",
                         color: "#FFFFFF",
-                        verticalAlign: "top"
+                        verticalAlign: "top",
+                        marginBottom: "5%"
                     }}
                 />
-                <Button title="Save Bag" onPress={addBag}/>
+                <Button title="Save Bag" onPress={addBag} style={{marginTop: "5%"}}/>
             </ScrollView>
             {
                 !keyboardOpen &&  
