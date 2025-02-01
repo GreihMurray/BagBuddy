@@ -19,11 +19,13 @@ export default function AddBag({navigation, route}){
     const [selectedDiscs, setSelectedDiscs] = useState([])
     const [discArray, setDiscArray] = useState()
     const [discs, setDiscs] = useState()
+    const [isEdit, setIsEdit] = useState(false)
 
     const [keyboardOpen, setKeyboardOpen] = useState(false)
 
     useEffect(() => {
         let bag = route?.params?.bag
+        console.log(route?.params)
 
         if(bag != null && bagName == ""){
             setBagName(bag?.name)
@@ -31,6 +33,7 @@ export default function AddBag({navigation, route}){
             setNotes(bag?.notes)
             setBagKey(bag?.key)
             setSelectedDiscs(bag?.discs)
+            setIsEdit(route?.params?.edit)
         } else{
             setColor(toHsv("#22AA22"))
         }
@@ -82,15 +85,15 @@ export default function AddBag({navigation, route}){
             discs: selectedDiscs
         }
 
-        let allBags = getJsonData("all-bags")
-        let key = bagKey != "" ? bagKey : new Date().getTime()
-        
+        let allBags = await getJsonData("all-bags")
+        let key = bagKey != "" && isEdit ? bagKey : new Date().getTime()
+
         allBags = {
             bags: {
-                ...allBags?.bags,
                 [key]: {
                     ...bag
-                }
+                },
+                ...allBags?.bags
             }
         }
 
@@ -98,7 +101,7 @@ export default function AddBag({navigation, route}){
 
         let target = "Bags"
 
-        if(route?.params?.edit){
+        if(isEdit){
             target = "BagDetails"
         }
 

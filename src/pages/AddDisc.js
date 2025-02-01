@@ -22,6 +22,7 @@ export default function AddDisc({navigation, route}){
     const [notes, setNotes] = useState("")
     const [discKey, setDiscKey] = useState("")
 
+    const [isEdit, setIsEdit] = useState(false)
     const [keyboardOpen, setKeyboardOpen] = useState(false)
 
     useEffect(() => {
@@ -38,6 +39,7 @@ export default function AddDisc({navigation, route}){
             setWeight(disc?.weight)
             setPlastic(disc?.plastic)
             setDiscKey(route?.params?.key)
+            setIsEdit(route?.params?.edit)
         } else{
             setColor(toHsv("#22AA22"))
         }
@@ -79,7 +81,7 @@ export default function AddDisc({navigation, route}){
         }
 
         let allDiscs = await getJsonData("all-discs")
-        let key = discKey != "" ? discKey : new Date().getTime();
+        let key = discKey != "" && isEdit ? discKey : new Date().getTime();
 
         allDiscs = {
             discs: {
@@ -91,7 +93,7 @@ export default function AddDisc({navigation, route}){
         await setJsonData("all-discs", allDiscs)
 
         let target = "Discs"
-        if(route?.params?.edit){
+        if(isEdit){
             target = "DiscDetails"
         }
 
