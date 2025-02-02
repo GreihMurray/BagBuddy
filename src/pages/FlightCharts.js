@@ -176,7 +176,7 @@ export default function FlightCharts({navigation}){
             </View>
             <View style={{
                 width: "100%",
-                height: "64%",
+                height: "67%",
                 marginTop: "2%",
                 borderWidth: 2,
                 borderColor: "#FFF",

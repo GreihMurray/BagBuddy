@@ -116,7 +116,7 @@ export default function DiscDetails({navigation, route}){
                 buttonMethod={editDisc}
                 buttonIcon={<Entypo name="edit" size={30} color={"#FFF"}/>}
             />
-            <ScrollView contentContainerStyle={{flexGrow: 1, paddingBottom: "100%"}}>
+            <ScrollView contentContainerStyle={{flexGrow: 1, paddingBottom: "80%"}}>
                 <View style={{flexDirection: "column", padding: "5%"}}>
                     <Text text={`Disc Name: ${disc?.name}`}/>
                     <Text text={`Disc Name: ${disc?.manufacturer}`}/>
@@ -143,14 +143,14 @@ export default function DiscDetails({navigation, route}){
                     
                 </View>
 
-                <View style={{flexDirection: "column", margin: "5%", height: "50%"}}>
+                <View style={{flexDirection: "column", margin: "5%", height: "50%", marginTop: "0", maxHeight: "350"}}>
                     <Text text={"Disc Notes"} style={{fontSize: 20, fontWeight: "bold"}}/>
                     <ScrollView contentContainerStyle={{width: "100%", borderWidth: 2, borderColor: "#FFFFFF", padding: "2%", height: "80%"}}>
-                        <Text text={route?.params?.bag?.notes}/>
+                        <Text text={route?.params?.disc?.notes}/>
                     </ScrollView>
                 </View>
                 
-                <View style={{backgroundColor: "rgba(20, 148, 2, 0.3)", borderWidth: 2, borderColor: "#000", width: "80%", height: "50%", margin: "auto", marginTop: "-15%"}}>
+                <View style={{backgroundColor: "rgba(20, 148, 2, 0.3)", borderWidth: 2, borderColor: "#000", width: "80%", height: "41%", margin: "auto", marginTop: "-15%"}}>
                     <Svg 
                         height="675"
                         width="325"
