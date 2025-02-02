@@ -6,15 +6,15 @@ import { ScrollView, View } from "react-native";
 import * as d3 from "d3"
 import Header from "../components/Header";
 import { fromHsv } from "react-native-color-picker";
-import Svg, { Circle, G, Line, Text as SVGText } from "react-native-svg";
+import Svg, { Circle, G, Line, Rect, Text as SVGText } from "react-native-svg";
 
 export default function FlightCharts({navigation}){
     const [bags, setBags] = useState()
     const [selectedBag, setSelectedBag] = useState(null)
     const [bagDiscs, setBagDiscs] = useState()
 
-    const HEIGHT = 900
-    const WIDTH = 405
+    const HEIGHT = 570
+    const WIDTH = 430
 
     useEffect(() => {
         getBags()
@@ -48,48 +48,57 @@ export default function FlightCharts({navigation}){
     }
 
     const getGrid = () => {
-        let elements = []
+        let elements = [] 
 
-        let step = HEIGHT / 15
-        let mark = 16
+        let boxWidth = WIDTH / 11
 
-        for(let i = 0; i <= HEIGHT + step; i += step){
-            elements.push(
-                <>
-                    <SVGText
-                        fontSize={12}
-                        x={6}
-                        y={i - 20}
-                        stroke={"#FFF"}
-                        strokeWidth={2}
-                        fill={"#FFF"}
-                        
-                    >
-                        {mark--}
-                    </SVGText>
-                    <Line 
-                        x1={0}
-                        x2={WIDTH}
-                        y1={i - step}
-                        y2={i - step}
-                        stroke={"#FFFFFF"}
-                        strokeWidth={1}
+        const xScale = d3.scaleLinear().domain([-6, 6]).range([WIDTH, 3])
+        const yScale = d3.scaleLinear().domain([0, 16]).nice().range([HEIGHT, 5]).nice()
+
+        for(let row = 1; row <= 16; row++){
+            for(let col = -6; col <= 6; col++){
+                elements.push(
+                    <Rect 
+                        id={`${row}-${col}`}
+                        x={xScale(col) - (0.5 * boxWidth)}
+                        y={yScale(row) - (0.5 * boxWidth)}
+                        stroke={"#000"}
+                        fill={"none"}
+                        width={boxWidth - 4}
+                        height={boxWidth - 4}
+                        opacity={0.4}
                     />
-                </>
+                )
+            }
+            if(row == 16){
+                break
+            }
+            elements.push(
+                <SVGText
+                    id={`text-${row}`}
+                    stroke={"#FFF"}
+                    strokeWidth={2}
+                    fontSize={12}
+                    x={3}
+                    y={yScale(row)}
+                >
+                    {row}
+                </SVGText>
             )
         }
 
-        step = WIDTH/10
-        for(let i = 0; i <= WIDTH + step; i += step){
+        for(let i = -5; i <= 5; i++){
             elements.push(
-                <Line 
-                    y1={0}
-                    y2={HEIGHT}
-                    x1={i - (step / 2)}
-                    x2={i - (step / 2)}
-                    stroke={"#FFFFFF"}
+                <SVGText
+                    id={`grid-${i}`}
+                    stroke={"#FFF"}
                     strokeWidth={1}
-                />
+                    fontSize={12}
+                    x={xScale(i) - 5}
+                    y={15}
+                >
+                    {i}
+                </SVGText>
             )
         }
 
@@ -101,8 +110,13 @@ export default function FlightCharts({navigation}){
             return
         }
 
-        const xScale = d3.scaleLinear().domain([-5, 5]).range([WIDTH, 0])
-        const yScale = d3.scaleLinear().domain([0, 15]).nice().range([HEIGHT, 0]).nice()
+        let xMin = -6
+        let xMax = 6
+        let yMin = 0
+        let yMax = 16
+
+        const xScale = d3.scaleLinear().domain([xMin, xMax]).range([WIDTH, 3])
+        const yScale = d3.scaleLinear().domain([yMin, yMax]).nice().range([HEIGHT, 5]).nice()
 
         let circles = []
 
@@ -113,17 +127,17 @@ export default function FlightCharts({navigation}){
             circles.push(
                 <>
                     <SVGText
-                        stroke={"#CCCCCC"}
-                        fill={"#CCCCCC"}
+                        stroke={"#FFF"}
+                        fill={"#FFF"}
                         x={xStart - 15}
-                        y={yStart - 30}
+                        y={yStart - 15}
                         fontSize={12}
                     >
                         {disc?.name}
                     </SVGText>
                     <Circle 
                         key={`${disc?.name}-${disc?.weight}`}
-                        r={20}
+                        r={12}
                         x={xStart}
                         y={yStart}
                         stroke={fromHsv(disc?.color) || "#FF00FF"}
@@ -162,16 +176,13 @@ export default function FlightCharts({navigation}){
             </View>
             <View style={{
                 width: "100%",
-                height: "65%",
+                height: "64%",
                 marginTop: "2%",
                 borderWidth: 2,
-                borderColor: "#FFF"
+                borderColor: "#FFF",
+                backgroundColor: "#005500"
             }}>
-                <ScrollView contentContainerStyle={{
-                    width: "100%",
-                    flexGrow: 1,
-                    paddingBottom: "0%"
-                }}>
+                
                     <Svg
                         height={HEIGHT}
                         width={WIDTH}
@@ -179,7 +190,6 @@ export default function FlightCharts({navigation}){
                         <G>{getGrid()}</G>
                         {getCircles()}
                     </Svg>
-                </ScrollView>
             </View>
             <BottomTab navigation={navigation} />
         </>
