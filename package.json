@@ -19,7 +19,7 @@
     "art": "0.10.3",
     "d3": "7.9.0",
     "d3-shape": "3.2.0",
-    "eas-cli": "^15.0.4",
+    "eas-cli": "^15.0.5",
     "expo": "~52.0.26",
     "expo-document-picker": "^13.0.2",
     "expo-file-system": "^18.0.8",
