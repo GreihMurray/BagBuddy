@@ -116,6 +116,7 @@ export default function AddBag({navigation, route}){
                     label={"Bag Name"}
                     setValue={setBagName}
                     value={bagName}
+                    inputStyle={{height: "60%", maxHeight: "60%", minHeight: "60%", fontSize: 16}}
                 />
                 
                 <Text style={{marginRight: "auto", marginLeft: "auto", marginTop: 20}}>Bag Color</Text>
@@ -134,7 +135,7 @@ export default function AddBag({navigation, route}){
                 />
 
                 <MultiSelect
-                    items={discArray}
+                    items={discArray || []}
                     uniqueKey="id"
                     ref={(comp) => this.multiSelect = comp}
                     selectedItems={selectedDiscs}

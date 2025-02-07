@@ -103,7 +103,7 @@ export default function AddDisc({navigation, route}){
     return (
         <View style={{height: "100%"}}>
             <Header title={"Add Disc"}/>
-            <ScrollView contentContainerStyle={{padding: "5%", flexGrow: 1, paddingBottom: "40%"}}>
+            <ScrollView contentContainerStyle={{padding: "5%", flexGrow: 1, paddingBottom: "70%"}}>
                 <TextboxWithLabel 
                     label={"Disc Name"}
                     setValue={setDiscName}
@@ -125,7 +125,7 @@ export default function AddDisc({navigation, route}){
                     inputMode={"numeric"}
                     value={weight}
                 />
-                <View style={{flexDirection: "row", marginTop: "5%"}}>
+                <View style={{flexDirection: "row", marginTop: "5%", height: "10%"}}>
                     <TextboxWithLabel 
                         label={"Speed"}
                         setValue={setSpeed}
@@ -135,9 +135,10 @@ export default function AddDisc({navigation, route}){
                             marginLeft: "auto",
                             marginRight: "auto"
                         }}
-                        inputStyle={{width: "100%", textAlign: "center"}}
+                        inputStyle={{width: "100%", textAlign: "center", height: "60%", marginTop: "3%"}}
                         style={{
-                            width:"22%"
+                            width:"22%",
+                            height: "100%"
                         }}
                     />
                     <Text  
@@ -152,13 +153,14 @@ export default function AddDisc({navigation, route}){
                         inputMode={"numeric"}
                         setValue={setGlide}
                         value={glide}
-                        inputStyle={{width: "100%", textAlign: "center"}}
                         labelStyle={{
                             marginLeft: "auto",
                             marginRight: "auto"
                         }}
+                        inputStyle={{width: "100%", textAlign: "center", height: "60%", marginTop: "3%"}}
                         style={{
-                            width:"22%"
+                            width:"22%",
+                            height: "100%"
                         }}
                     />
                     <Text  
@@ -173,13 +175,14 @@ export default function AddDisc({navigation, route}){
                         inputMode={"numeric"}
                         setValue={setTurn}
                         value={turn}
-                        inputStyle={{width: "100%", textAlign: "center"}}
                         labelStyle={{
                             marginLeft: "auto",
                             marginRight: "auto"
                         }}
+                        inputStyle={{width: "100%", textAlign: "center", height: "60%", marginTop: "3%"}}
                         style={{
-                            width:"23%"
+                            width:"22%",
+                            height: "100%"
                         }}
                     />
                     <Text  
@@ -194,13 +197,14 @@ export default function AddDisc({navigation, route}){
                         inputMode={"numeric"}
                         setValue={setFade}
                         value={fade}
-                        inputStyle={{width: "100%", textAlign: "center"}}
                         labelStyle={{
                             marginLeft: "auto",
                             marginRight: "auto"
                         }}
+                        inputStyle={{width: "100%", textAlign: "center", height: "60%", marginTop: "3%"}}
                         style={{
-                            width:"23%"
+                            width:"22%",
+                            height: "100%"
                         }}
                     />
                 </View>

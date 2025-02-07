@@ -6,8 +6,8 @@ export default function Header({title, showButton=false, buttonMethod, buttonIco
     return (
         <View style={{
                 width: "100%",
-                height: "12%",
-                paddingTop: "50",
+                height: "8%",
+                paddingTop: "15",
                 borderBottomWidth: 1,
                 borderColor: "#CCCCCC",
                 boxShadow: "10px black",
