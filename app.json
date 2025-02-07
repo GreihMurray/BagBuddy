@@ -17,13 +17,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/bagBuddyMascot.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.murrag.bagbuddy"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/bagBuddyMascot.png"
     },
     "extra": {
       "eas": {
