@@ -4,7 +4,7 @@ import BottomTab from "../components/BottomTab";
 import Header from "../components/Header";
 import TextboxWithLabel from "../components/TextBoxWithLabel";
 import { useEffect, useRef, useState } from "react";
-// import { ColorPicker, toHsv } from "react-native-color-picker";
+import { ColorPicker, toHsv } from "react-native-color-picker";
 import { getJsonData, setJsonData } from "../utils/StorageUtils";
 
 export default function AddDisc({navigation, route}){
@@ -209,7 +209,7 @@ export default function AddDisc({navigation, route}){
                     />
                 </View>
                 <Text style={{marginRight: "auto", marginLeft: "auto", marginTop: 20}} text="Disc Color" />
-                {/* <ColorPicker
+                <ColorPicker
                     ref={colorPickerRef}
                     onColorChange={(color) => setColor(color)}
                     color={color}
@@ -221,7 +221,7 @@ export default function AddDisc({navigation, route}){
                         marginRight: "auto",
                         marginLeft: "auto"
                     }}
-                /> */}
+                />
                 <Text text={"Notes"}/>
                 <TextInput
                     multiline
