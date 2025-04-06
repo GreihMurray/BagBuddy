@@ -4,7 +4,7 @@ import Header from "../components/Header"
 import { Button, Keyboard, ScrollView, TextInput, View } from "react-native"
 import Text from "../components/Text"
 import TextboxWithLabel from "../components/TextBoxWithLabel"
-import { ColorPicker, toHsv } from "react-native-color-picker"
+import { ColorPicker, toHsv } from "../react-native-color-picker"
 import BottomTab from "../components/BottomTab"
 import MultiSelect from "react-native-multiple-select"
 

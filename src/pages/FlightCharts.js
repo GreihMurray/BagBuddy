@@ -5,7 +5,7 @@ import { Picker } from "@react-native-picker/picker"
 import { ScrollView, View } from "react-native";
 import * as d3 from "d3"
 import Header from "../components/Header";
-import { fromHsv } from "react-native-color-picker";
+import { fromHsv } from "../react-native-color-picker/dist/index";
 import Svg, { Circle, G, Line, Rect, Text as SVGText } from "react-native-svg";
 
 export default function FlightCharts({navigation}){

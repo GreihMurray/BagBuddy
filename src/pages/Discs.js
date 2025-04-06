@@ -3,7 +3,7 @@ import Text from "../components/Text";
 import BottomTab from "../components/BottomTab";
 import { getJsonData, setJsonData } from "../utils/StorageUtils";
 import { useEffect, useState } from "react";
-import { fromHsv } from "react-native-color-picker";
+import { fromHsv } from "../react-native-color-picker/dist/index";
 import Header from "../components/Header";
 import { AntDesign, Feather, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";

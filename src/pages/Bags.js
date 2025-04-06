@@ -2,7 +2,7 @@ import { Pressable, ScrollView, View } from "react-native";
 import BottomTab from "../components/BottomTab";
 import { getJsonData, setJsonData } from "../utils/StorageUtils";
 import { useEffect, useState } from "react";
-import { fromHsv } from "react-native-color-picker";
+import { fromHsv } from "../react-native-color-picker/dist/index";
 import Header from "../components/Header";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
