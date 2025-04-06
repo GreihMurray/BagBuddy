@@ -25,13 +25,13 @@ export default function AddBag({navigation, route}){
 
     useEffect(() => {
         let bag = route?.params?.bag
-        console.log(route?.params)
+        console.log(route.params)
 
         if(bag != null && bagName == ""){
             setBagName(bag?.name)
             setColor(bag?.color)
             setNotes(bag?.notes)
-            setBagKey(bag?.key)
+            setBagKey(route?.params?.key)
             setSelectedDiscs(bag?.discs)
             setIsEdit(route?.params?.edit)
         } else{
@@ -86,14 +86,14 @@ export default function AddBag({navigation, route}){
         }
 
         let allBags = await getJsonData("all-bags")
-        let key = bagKey != "" && isEdit ? bagKey : new Date().getTime()
+        let key = bagKey != "" && isEdit ? bagKey : new Date().getTime();
 
         allBags = {
             bags: {
+                ...allBags?.bags,
                 [key]: {
                     ...bag
                 },
-                ...allBags?.bags
             }
         }
 

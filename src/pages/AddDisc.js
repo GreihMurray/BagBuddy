@@ -10,6 +10,16 @@ import { getJsonData, setJsonData } from "../utils/StorageUtils";
 export default function AddDisc({navigation, route}){
     const colorPickerRef = useRef(null)
 
+    const manufacturerRef = useRef()
+    const speedRef = useRef();
+    const glideRef = useRef();
+    const turnRef = useRef();
+    const fadeRef = useRef();
+    const nameRef = useRef();
+    const notesRef = useRef();
+    const plasticRef = useRef();
+    const weightRef = useRef();
+
     const [discName, setDiscName] = useState("")
     const [manufacturer, setManufacturer] = useState("")
     const [plastic, setPlastic] = useState("")
@@ -86,7 +96,7 @@ export default function AddDisc({navigation, route}){
         allDiscs = {
             discs: {
                 ...allDiscs?.discs,
-                [key]: {...disc},
+                [key]: {...disc}
             }
         }
 
@@ -108,22 +118,37 @@ export default function AddDisc({navigation, route}){
                     label={"Disc Name"}
                     setValue={setDiscName}
                     value={discName}
+                    returnKey={"next"}
+                    submitBehavior={"submit"}
+                    onSubmit={() => manufacturerRef.current.focus()}
                 />
                 <TextboxWithLabel 
                     label={"Manufacturer"}
                     setValue={setManufacturer}
                     value={manufacturer}
+                    ref={manufacturerRef}
+                    returnKey={"next"}
+                    submitBehavior={"submit"}
+                    onSubmit={() => {plasticRef.current.focus()}}
                 />
                 <TextboxWithLabel 
                     label={"Plastic"}
                     setValue={setPlastic}
                     value={plastic}
+                    ref={plasticRef}
+                    returnKey={"next"}
+                    submitBehavior={"submit"}
+                    onSubmit={() => {weightRef.current.focus()}}
                 />
                 <TextboxWithLabel 
                     label={"Weight"}
                     setValue={setWeight}
                     inputMode={"numeric"}
                     value={weight}
+                    ref={weightRef}
+                    returnKey={"next"}
+                    submitBehavior={"submit"}
+                    onSubmit={() => {speedRef.current.focus()}}
                 />
                 <View style={{flexDirection: "row", marginTop: "5%", height: "10%"}}>
                     <TextboxWithLabel 
@@ -131,6 +156,10 @@ export default function AddDisc({navigation, route}){
                         setValue={setSpeed}
                         value={speed}
                         inputMode={"numeric"}
+                        ref={speedRef}
+                        returnKey={"next"}
+                        submitBehavior={"submit"}
+                        onSubmit={() => {glideRef.current.focus()}}
                         labelStyle={{
                             marginLeft: "auto",
                             marginRight: "auto"
@@ -152,7 +181,11 @@ export default function AddDisc({navigation, route}){
                         label={"Glide"}
                         inputMode={"numeric"}
                         setValue={setGlide}
+                        ref={glideRef}
                         value={glide}
+                        returnKey={"next"}
+                        submitBehavior={"submit"}
+                        onSubmit={() => {turnRef.current.focus()}}
                         labelStyle={{
                             marginLeft: "auto",
                             marginRight: "auto"
@@ -174,6 +207,10 @@ export default function AddDisc({navigation, route}){
                         label={"Turn"}
                         inputMode={"numeric"}
                         setValue={setTurn}
+                        ref={turnRef}
+                        returnKey={"next"}
+                        submitBehavior={"submit"}
+                        onSubmit={() => {fadeRef.current.focus()}}
                         value={turn}
                         labelStyle={{
                             marginLeft: "auto",
@@ -196,6 +233,9 @@ export default function AddDisc({navigation, route}){
                         label={"Fade"}
                         inputMode={"numeric"}
                         setValue={setFade}
+                        ref={fadeRef}
+                        returnKey={"next"}
+                        submitBehavior={"blurAndSubmit"}
                         value={fade}
                         labelStyle={{
                             marginLeft: "auto",
@@ -228,6 +268,7 @@ export default function AddDisc({navigation, route}){
                     maxLength={300}
                     onChangeText={(value) => setNotes(value)}
                     numberOfLines={8}
+                    ref={notesRef}
                     value={notes}
                     style={{
                         height: "20%",

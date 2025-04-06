@@ -1,7 +1,8 @@
 import { TextInput, View } from "react-native"
 import Text from "./Text"
+import { forwardRef } from "react"
 
-export default function TextboxWithLabel({setValue, label, value, labelStyle, inputStyle, style, inputMode}){
+export default forwardRef(function TextboxWithLabel({setValue, label, value, labelStyle, inputStyle, style, returnKey, inputMode, onSubmit, submitBehavior}, ref){
     return (
         <View style={{flexDirection: "column", height: "12%", ...style}}>
             <Text style={{ ...labelStyle}} text={label} />
@@ -11,6 +12,11 @@ export default function TextboxWithLabel({setValue, label, value, labelStyle, in
                 label={label}
                 onChangeText={(value) => setValue(value)}
                 value={value}
+                ref={ref}
+                returnKeyType={returnKey || "submit"}
+                onSubmitEditing={onSubmit}
+                submitBehavior={submitBehavior || "blurAndSubmit"}
+                autoCapitalize="words"
                 style={{
                     width: "100%",
                     borderWidth: 1,
@@ -22,4 +28,4 @@ export default function TextboxWithLabel({setValue, label, value, labelStyle, in
             />
         </View>
     )
-}
+})

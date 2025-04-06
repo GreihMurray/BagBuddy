@@ -40,7 +40,7 @@ export default function Discs({navigation}){
     }
 
     const editDisc = (disc, key) => {
-        navigation.navigate("AddDisc", {disc: disc, key: key})
+        navigation.navigate("AddDisc", {disc: disc, key: key, edit: true})
     }
 
     const viewDiscDetails = (disc, key) => {
@@ -48,8 +48,12 @@ export default function Discs({navigation}){
     }
 
     const deleteDisc = async (key) => {
-        delete discs.discs[key];
-
+        if(Object.keys(discs.discs).length == 1){
+            discs = null;
+        } else{
+            delete discs.discs[key];
+        }
+        
         await setJsonData("all-discs", discs)
         refreshData()
     }

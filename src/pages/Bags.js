@@ -27,7 +27,7 @@ export default function Bags({navigation}){
     }
 
     const editBag = (bag, key) => {
-        navigation.navigate("AddBag", {bag: bag, key: key})
+        navigation.navigate("AddBag", {bag: bag, key: key, edit: true})
     }
 
     const viewBagDetails = (bag, key) => {
