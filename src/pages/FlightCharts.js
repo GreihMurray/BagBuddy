@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import BottomTab from "../components/BottomTab";
 import { getDiscsInBag, getJsonData } from "../utils/StorageUtils";
 import { Picker } from "@react-native-picker/picker"
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import * as d3 from "d3"
 import Header from "../components/Header";
-import { fromHsv } from "../react-native-color-picker/dist/index";
-import Svg, { Circle, G, Line, Rect, Text as SVGText } from "react-native-svg";
+import { fromHsv } from "../react-native-color-picker/src/index"
+import Svg, { Circle, G, Rect, Text as SVGText } from "react-native-svg";
 
 export default function FlightCharts({navigation}){
     const [bags, setBags] = useState()

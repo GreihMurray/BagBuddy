@@ -8,7 +8,7 @@ import * as scale from "d3-scale"
 import * as shape from "d3-shape"
 import * as d3 from "d3"
 import Svg, { G, Line, Path, Text as SVGText } from "react-native-svg";
-import { fromHsv } from "../react-native-color-picker/dist/index";
+import { fromHsv } from "../react-native-color-picker/src/index"
 
 export default function DiscDetails({navigation, route}){
     const [disc, setDisc] = useState()

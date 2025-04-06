@@ -3,7 +3,7 @@ import { getDiscsInBag } from "../utils/StorageUtils";
 import Header from "../components/Header";
 import { ScrollView, View } from "react-native";
 import Text from "../components/Text";
-import { fromHsv } from "../react-native-color-picker/dist/index";
+import { fromHsv } from "../react-native-color-picker/src/index"
 import BottomTab from "../components/BottomTab";
 import { Entypo, FontAwesome6 } from "@expo/vector-icons";
 
