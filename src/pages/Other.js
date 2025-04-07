@@ -9,6 +9,16 @@ import { getJsonData, setJsonData } from "../utils/StorageUtils";
 export default function Other({navigation}){
     const {StorageAccessFramework} = FileSystem
 
+    const TESTERS = [
+        'framundahcheese', 
+        'CaptainGoat', 
+        'Chaoticgood', 
+        'Master Sergeant', 
+        'dwthetrainwreck',
+        'Kaya',
+        'Hedgehog'
+    ]
+
     const exportData = async () => {
         let fileName = FileSystem.documentDirectory + "dataExport.json"
 
@@ -60,7 +70,7 @@ export default function Other({navigation}){
     return(
         <>
             <Header title={"Settings"}/>
-            <View style={{height: "80%", width: "100%", padding: "5%"}}>
+            <View style={{height: "35%", width: "100%", padding: "5%"}}>
                 <Text text={"Export Data"} style={{
                     margin: "auto",
                     marginTop: "0",
@@ -80,6 +90,14 @@ export default function Other({navigation}){
                 }}/>
 
                 <Button  title={"Import"} onPress={importData} style={{height: "20%", width: "80%"}}/>
+            </View>
+            <View style={{marginRight: "auto", marginLeft: "auto"}}>
+                <Text text={"THANKS TO:\n"} style={{fontSize: 30, fontWeight: 800, lineHeight: 60}}/>
+                    {
+                        TESTERS.map((tester) => {
+                            return <Text text={`${tester}\n`} style={{textAlign: "center", fontSize: 20, fontStyle: 'italic'}} key={tester}/>
+                        })
+                    }
             </View>
             <BottomTab navigation={navigation} />
         </>
