@@ -17,7 +17,7 @@ export default function DiscDetails({navigation, route}){
 
     useEffect(() => {
         let disc = route?.params?.disc
-
+        console.log("YOYOYOYOYOYO")
         generateFlightData()
         setDisc(disc)
     }, [])
@@ -30,10 +30,10 @@ export default function DiscDetails({navigation, route}){
 
     const generateFlightData = () => {
         let disc = route?.params?.disc
-        let speed = parseFloat(disc?.speed)
-        let glide = parseFloat(disc?.glide)
-        let turn = parseFloat(disc?.turn)
-        let fade = parseFloat(disc?.fade)
+        let speed = parseFloat(disc?.speed || 0)
+        let glide = parseFloat(disc?.glide || 0)
+        let turn = parseFloat(disc?.turn || 0)
+        let fade = parseFloat(disc?.fade || 0)
 
         const tempData = []
         const maxDistance = (Math.max(1, (speed * 0.5)) * 35) * ((1 + ((glide - 5)  * 0.1))) + 200 

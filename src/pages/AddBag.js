@@ -4,7 +4,7 @@ import Header from "../components/Header"
 import { Button, Keyboard, ScrollView, TextInput, View } from "react-native"
 import Text from "../components/Text"
 import TextboxWithLabel from "../components/TextBoxWithLabel"
-import { ColorPicker, toHsv } from "../react-native-color-picker/src/index"
+import { TriangleColorPicker, toHsv } from "../react-native-color-picker/src/index"
 import BottomTab from "../components/BottomTab"
 import MultiSelect from "react-native-multiple-select"
 
@@ -13,6 +13,7 @@ export default function AddBag({navigation, route}){
     
     const [bagName, setBagName] = useState("")
     const [color, setColor] = useState("")
+    const [originalColor, setOriginalColor] = useState()
     const [notes, setNotes] = useState("")
     const [bagKey, setBagKey] = useState("")
 
@@ -30,11 +31,13 @@ export default function AddBag({navigation, route}){
         if(bag != null && bagName == ""){
             setBagName(bag?.name)
             setColor(bag?.color)
+            setOriginalColor(bag?.color)
             setNotes(bag?.notes)
             setBagKey(route?.params?.key)
             setSelectedDiscs(bag?.discs)
             setIsEdit(route?.params?.edit)
         } else{
+            setOriginalColor("#22AA22")
             setColor(toHsv("#22AA22"))
         }
     }, [route])
@@ -120,10 +123,11 @@ export default function AddBag({navigation, route}){
                 />
                 
                 <Text style={{marginRight: "auto", marginLeft: "auto", marginTop: 20}}>Bag Color</Text>
-                <ColorPicker
+                <TriangleColorPicker
                     ref={colorPickerRef}
                     onColorChange={(color) => setColor(color)}
                     color={color}
+                    oldColor={originalColor}
                     style={{
                         width: 200,
                         height: 200,

@@ -4,7 +4,7 @@ import BottomTab from "../components/BottomTab";
 import Header from "../components/Header";
 import TextboxWithLabel from "../components/TextBoxWithLabel";
 import { useEffect, useRef, useState } from "react";
-import { ColorPicker, toHsv } from "../react-native-color-picker/src/index"
+import { TriangleColorPicker, fromHsv, toHsv } from "../react-native-color-picker/src/index"
 import { getJsonData, setJsonData } from "../utils/StorageUtils";
 
 export default function AddDisc({navigation, route}){
@@ -15,13 +15,13 @@ export default function AddDisc({navigation, route}){
     const glideRef = useRef();
     const turnRef = useRef();
     const fadeRef = useRef();
-    const nameRef = useRef();
     const notesRef = useRef();
     const plasticRef = useRef();
     const weightRef = useRef();
 
     const [discName, setDiscName] = useState("")
     const [manufacturer, setManufacturer] = useState("")
+    const [originalColor, setOriginalColor] = useState()
     const [plastic, setPlastic] = useState("")
     const [weight, setWeight] = useState("")
     const [speed, setSpeed] = useState("")
@@ -45,6 +45,7 @@ export default function AddDisc({navigation, route}){
             setTurn(disc?.turn)
             setFade(disc?.fade)
             setColor(disc?.color)
+            setOriginalColor(fromHsv(disc?.color))
             setNotes(disc?.notes)
             setWeight(disc?.weight)
             setPlastic(disc?.plastic)
@@ -52,6 +53,7 @@ export default function AddDisc({navigation, route}){
             setIsEdit(route?.params?.edit)
         } else{
             setColor(toHsv("#22AA22"))
+            setOriginalColor("#22AA22")
         }
     }, [route])
 
@@ -249,10 +251,11 @@ export default function AddDisc({navigation, route}){
                     />
                 </View>
                 <Text style={{marginRight: "auto", marginLeft: "auto", marginTop: 20}} text="Disc Color" />
-                <ColorPicker
+                <TriangleColorPicker
                     ref={colorPickerRef}
                     onColorChange={(color) => setColor(color)}
                     color={color}
+                    oldColor={originalColor}
                     style={{
                         width: 200,
                         height: 200,
