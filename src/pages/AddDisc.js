@@ -1,11 +1,13 @@
-import { Button, Keyboard, ScrollView, TextInput, View } from "react-native";
+import { Button, Keyboard, TextInput, View } from "react-native";
 import Text from "../components/Text";
 import BottomTab from "../components/BottomTab";
 import Header from "../components/Header";
 import TextboxWithLabel from "../components/TextBoxWithLabel";
 import { useEffect, useRef, useState } from "react";
-import { TriangleColorPicker, fromHsv, toHsv } from "../react-native-color-picker/src/index"
+import { fromHsv, toHsv } from "../react-native-color-picker/src/index"
 import { getJsonData, setJsonData } from "../utils/StorageUtils";
+import { GestureHandlerRootView, ScrollView } from "react-native-gesture-handler";
+import ColorPicker, { BrightnessSlider, colorKit, OpacitySlider, Panel3, Preview, PreviewText, SaturationSlider } from "reanimated-color-picker";
 
 export default function AddDisc({navigation, route}){
     const colorPickerRef = useRef(null)
@@ -38,6 +40,7 @@ export default function AddDisc({navigation, route}){
     useEffect(() => {
         if(route?.params?.disc && discName == ""){
             let disc = route?.params?.disc
+            
             setDiscName(disc?.name)
             setManufacturer(disc.manufacturer)
             setSpeed(disc.speed)
@@ -52,7 +55,7 @@ export default function AddDisc({navigation, route}){
             setDiscKey(route?.params?.key)
             setIsEdit(route?.params?.edit)
         } else{
-            setColor(toHsv("#22AA22"))
+            setColor("#22AA22")
             setOriginalColor("#22AA22")
         }
     }, [route])
@@ -112,178 +115,188 @@ export default function AddDisc({navigation, route}){
         navigation.navigate(target, {disc: disc, key: key})
     }
 
+    const onColorChange = (tempColor) => {
+        setColor(tempColor.hsv)
+    }
+
     return (
         <View style={{height: "100%"}}>
             <Header title={"Add Disc"}/>
-            <ScrollView contentContainerStyle={{padding: "5%", flexGrow: 1, paddingBottom: "70%"}}>
-                <TextboxWithLabel 
-                    label={"Disc Name"}
-                    setValue={setDiscName}
-                    value={discName}
-                    returnKey={"next"}
-                    submitBehavior={"submit"}
-                    onSubmit={() => manufacturerRef.current.focus()}
-                />
-                <TextboxWithLabel 
-                    label={"Manufacturer"}
-                    setValue={setManufacturer}
-                    value={manufacturer}
-                    ref={manufacturerRef}
-                    returnKey={"next"}
-                    submitBehavior={"submit"}
-                    onSubmit={() => {plasticRef.current.focus()}}
-                />
-                <TextboxWithLabel 
-                    label={"Plastic"}
-                    setValue={setPlastic}
-                    value={plastic}
-                    ref={plasticRef}
-                    returnKey={"next"}
-                    submitBehavior={"submit"}
-                    onSubmit={() => {weightRef.current.focus()}}
-                />
-                <TextboxWithLabel 
-                    label={"Weight"}
-                    setValue={setWeight}
-                    inputMode={"numeric"}
-                    value={weight}
-                    ref={weightRef}
-                    returnKey={"next"}
-                    submitBehavior={"submit"}
-                    onSubmit={() => {speedRef.current.focus()}}
-                />
-                <View style={{flexDirection: "row", marginTop: "5%", height: "10%"}}>
+            <GestureHandlerRootView>
+                <ScrollView contentContainerStyle={{padding: "5%", flexGrow: 1, paddingBottom: "80%"}}>
                     <TextboxWithLabel 
-                        label={"Speed"}
-                        setValue={setSpeed}
-                        value={speed}
-                        inputMode={"numeric"}
-                        ref={speedRef}
+                        label={"Disc Name"}
+                        setValue={setDiscName}
+                        value={discName}
                         returnKey={"next"}
                         submitBehavior={"submit"}
-                        onSubmit={() => {glideRef.current.focus()}}
-                        labelStyle={{
-                            marginLeft: "auto",
-                            marginRight: "auto"
-                        }}
-                        inputStyle={{width: "100%", textAlign: "center", height: "60%", marginTop: "3%"}}
-                        style={{
-                            width:"22%",
-                            height: "100%"
-                        }}
-                    />
-                    <Text  
-                        style={{
-                            fontSize: 48,
-                            marginTop: "2%"
-                        }}
-                        text="|"
+                        onSubmit={() => manufacturerRef.current.focus()}
                     />
                     <TextboxWithLabel 
-                        label={"Glide"}
-                        inputMode={"numeric"}
-                        setValue={setGlide}
-                        ref={glideRef}
-                        value={glide}
+                        label={"Manufacturer"}
+                        setValue={setManufacturer}
+                        value={manufacturer}
+                        ref={manufacturerRef}
                         returnKey={"next"}
                         submitBehavior={"submit"}
-                        onSubmit={() => {turnRef.current.focus()}}
-                        labelStyle={{
-                            marginLeft: "auto",
-                            marginRight: "auto"
-                        }}
-                        inputStyle={{width: "100%", textAlign: "center", height: "60%", marginTop: "3%"}}
-                        style={{
-                            width:"22%",
-                            height: "100%"
-                        }}
-                    />
-                    <Text  
-                        style={{
-                            fontSize: 48,
-                            marginTop: "2%"
-                        }}
-                        text="|"
+                        onSubmit={() => {plasticRef.current.focus()}}
                     />
                     <TextboxWithLabel 
-                        label={"Turn"}
-                        inputMode={"numeric"}
-                        setValue={setTurn}
-                        ref={turnRef}
+                        label={"Plastic"}
+                        setValue={setPlastic}
+                        value={plastic}
+                        ref={plasticRef}
                         returnKey={"next"}
                         submitBehavior={"submit"}
-                        onSubmit={() => {fadeRef.current.focus()}}
-                        value={turn}
-                        labelStyle={{
-                            marginLeft: "auto",
-                            marginRight: "auto"
-                        }}
-                        inputStyle={{width: "100%", textAlign: "center", height: "60%", marginTop: "3%"}}
-                        style={{
-                            width:"22%",
-                            height: "100%"
-                        }}
-                    />
-                    <Text  
-                        style={{
-                            fontSize: 48,
-                            marginTop: "2%"
-                        }}
-                        text="|"
+                        onSubmit={() => {weightRef.current.focus()}}
                     />
                     <TextboxWithLabel 
-                        label={"Fade"}
+                        label={"Weight"}
+                        setValue={setWeight}
                         inputMode={"numeric"}
-                        setValue={setFade}
-                        ref={fadeRef}
+                        value={weight}
+                        ref={weightRef}
                         returnKey={"next"}
-                        submitBehavior={"blurAndSubmit"}
-                        value={fade}
-                        labelStyle={{
-                            marginLeft: "auto",
-                            marginRight: "auto"
-                        }}
-                        inputStyle={{width: "100%", textAlign: "center", height: "60%", marginTop: "3%"}}
+                        submitBehavior={"submit"}
+                        onSubmit={() => {speedRef.current.focus()}}
+                    />
+                    <View style={{flexDirection: "row", marginTop: "5%", height: "10%"}}>
+                        <TextboxWithLabel 
+                            label={"Speed"}
+                            setValue={setSpeed}
+                            value={speed}
+                            inputMode={"numeric"}
+                            ref={speedRef}
+                            returnKey={"next"}
+                            submitBehavior={"submit"}
+                            onSubmit={() => {glideRef.current.focus()}}
+                            labelStyle={{
+                                marginLeft: "auto",
+                                marginRight: "auto"
+                            }}
+                            inputStyle={{width: "100%", textAlign: "center", height: "60%", marginTop: "3%"}}
+                            style={{
+                                width:"22%",
+                                height: "100%"
+                            }}
+                        />
+                        <Text  
+                            style={{
+                                fontSize: 48,
+                                marginTop: "2%"
+                            }}
+                            text="|"
+                        />
+                        <TextboxWithLabel 
+                            label={"Glide"}
+                            inputMode={"decimal"}
+                            setValue={setGlide}
+                            ref={glideRef}
+                            value={glide}
+                            returnKey={"next"}
+                            submitBehavior={"submit"}
+                            onSubmit={() => {turnRef.current.focus()}}
+                            labelStyle={{
+                                marginLeft: "auto",
+                                marginRight: "auto"
+                            }}
+                            inputStyle={{width: "100%", textAlign: "center", height: "60%", marginTop: "3%"}}
+                            style={{
+                                width:"22%",
+                                height: "100%"
+                            }}
+                        />
+                        <Text  
+                            style={{
+                                fontSize: 48,
+                                marginTop: "2%"
+                            }}
+                            text="|"
+                        />
+                        <TextboxWithLabel 
+                            label={"Turn"}
+                            inputMode={"tel"}
+                            setValue={setTurn}
+                            ref={turnRef}
+                            returnKey={"next"}
+                            submitBehavior={"submit"}
+                            onSubmit={() => {fadeRef.current.focus()}}
+                            value={turn}
+                            labelStyle={{
+                                marginLeft: "auto",
+                                marginRight: "auto"
+                            }}
+                            inputStyle={{width: "100%", textAlign: "center", height: "60%", marginTop: "3%"}}
+                            style={{
+                                width:"22%",
+                                height: "100%"
+                            }}
+                        />
+                        <Text  
+                            style={{
+                                fontSize: 48,
+                                marginTop: "2%"
+                            }}
+                            text="|"
+                        />
+                        <TextboxWithLabel 
+                            label={"Fade"}
+                            inputMode={"numeric"}
+                            setValue={setFade}
+                            ref={fadeRef}
+                            returnKey={"next"}
+                            submitBehavior={"blurAndSubmit"}
+                            value={fade}
+                            labelStyle={{
+                                marginLeft: "auto",
+                                marginRight: "auto"
+                            }}
+                            inputStyle={{width: "100%", textAlign: "center", height: "60%", marginTop: "3%"}}
+                            style={{
+                                width:"22%",
+                                height: "100%"
+                            }}
+                        />
+                    </View>
+                    <Text style={{marginRight: "auto", marginLeft: "auto", marginTop: 20}} text="Disc Color" />
+                    <ColorPicker
+                        onCompleteJS={onColorChange}
+                        value={originalColor}
                         style={{
-                            width:"22%",
-                            height: "100%"
+                            width: 200,
+                            height: 200,
+                            borderRadius: 10,
+                            marginBottom: "12%",
+                            marginTop: "3%",
+                            marginRight: "auto",
+                            marginLeft: "auto"
+                        }}>
+                        <Panel3/>
+                        <View style={{borderColor: "#000", margin: "6%"}}>
+                            <Preview style={{height: "45%"}} disableOpacityTexture hideInitialColor/>
+                        </View>
+                        
+                    </ColorPicker>
+                    <Text text={"Notes"}/>
+                    <TextInput
+                        multiline
+                        maxLength={300}
+                        onChangeText={(value) => setNotes(value)}
+                        numberOfLines={8}
+                        ref={notesRef}
+                        value={notes}
+                        style={{
+                            height: "20%",
+                            borderWidth: 2,
+                            borderColor: "#D9D9D9",
+                            verticalAlign: "top",
+                            marginBottom: "5%",
+                            color: "#FFF"
                         }}
                     />
-                </View>
-                <Text style={{marginRight: "auto", marginLeft: "auto", marginTop: 20}} text="Disc Color" />
-                <TriangleColorPicker
-                    ref={colorPickerRef}
-                    onColorChange={(color) => setColor(color)}
-                    color={color}
-                    oldColor={originalColor}
-                    style={{
-                        width: 200,
-                        height: 200,
-                        borderRadius: 10,
-                        marginBottom: 10,
-                        marginRight: "auto",
-                        marginLeft: "auto"
-                    }}
-                />
-                <Text text={"Notes"}/>
-                <TextInput
-                    multiline
-                    maxLength={300}
-                    onChangeText={(value) => setNotes(value)}
-                    numberOfLines={8}
-                    ref={notesRef}
-                    value={notes}
-                    style={{
-                        height: "20%",
-                        borderWidth: 2,
-                        borderColor: "#D9D9D9",
-                        verticalAlign: "top",
-                        marginBottom: "5%",
-                        color: "#FFF"
-                    }}
-                />
-                <Button title="Save Disc" onPress={addDisc} style={{marginTop: "5%"}}/>
-            </ScrollView>
+                    <Button title="Save Disc" onPress={addDisc} style={{marginTop: "5%"}}/>
+                </ScrollView>
+            </GestureHandlerRootView>
             {
                 !keyboardOpen && <BottomTab navigation={navigation}/> 
             }

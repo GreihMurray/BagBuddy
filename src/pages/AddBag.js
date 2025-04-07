@@ -4,9 +4,10 @@ import Header from "../components/Header"
 import { Button, Keyboard, ScrollView, TextInput, View } from "react-native"
 import Text from "../components/Text"
 import TextboxWithLabel from "../components/TextBoxWithLabel"
-import { TriangleColorPicker, toHsv } from "../react-native-color-picker/src/index"
+import { TriangleColorPicker, fromHsv, toHsv } from "../react-native-color-picker/src/index"
 import BottomTab from "../components/BottomTab"
 import MultiSelect from "react-native-multiple-select"
+import ColorPicker, { Panel3, Preview } from "reanimated-color-picker"
 
 export default function AddBag({navigation, route}){
     const colorPickerRef = useRef(null)
@@ -31,14 +32,14 @@ export default function AddBag({navigation, route}){
         if(bag != null && bagName == ""){
             setBagName(bag?.name)
             setColor(bag?.color)
-            setOriginalColor(bag?.color)
+            setOriginalColor(fromHsv(bag?.color))
             setNotes(bag?.notes)
             setBagKey(route?.params?.key)
             setSelectedDiscs(bag?.discs)
             setIsEdit(route?.params?.edit)
         } else{
             setOriginalColor("#22AA22")
-            setColor(toHsv("#22AA22"))
+            setColor("#22AA22")
         }
     }, [route])
 
@@ -111,6 +112,10 @@ export default function AddBag({navigation, route}){
         navigation.navigate(target, {bag: bag, key: key})
     }
 
+    const onColorChange = (tempColor) => {
+        setColor(tempColor.hsv)
+    }
+
     return (
         <View style={{height: "100%"}}>
             <Header title={"Add Bag"}/>
@@ -123,20 +128,24 @@ export default function AddBag({navigation, route}){
                 />
                 
                 <Text style={{marginRight: "auto", marginLeft: "auto", marginTop: 20}}>Bag Color</Text>
-                <TriangleColorPicker
-                    ref={colorPickerRef}
-                    onColorChange={(color) => setColor(color)}
-                    color={color}
-                    oldColor={originalColor}
+                <ColorPicker
+                    onCompleteJS={onColorChange}
+                    value={originalColor}
                     style={{
                         width: 200,
                         height: 200,
                         borderRadius: 10,
-                        marginBottom: 10,
+                        marginBottom: "18%",
+                        marginTop: "3%",
                         marginRight: "auto",
                         marginLeft: "auto"
-                    }}
-                />
+                    }}>
+                    <Panel3/>
+                    <View style={{borderColor: "#000", margin: "6%"}}>
+                        <Preview style={{height: "45%"}} disableOpacityTexture hideInitialColor/>
+                    </View>
+                    
+                </ColorPicker>
 
                 <MultiSelect
                     items={discArray || []}
