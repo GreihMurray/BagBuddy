@@ -28,7 +28,7 @@ export default function BagDetails({navigation, route}){
 
     return (
         <View style={{height: "100%"}}>
-            <Header title={route?.params?.bag?.name} showButton={true}
+            <Header title={`${route?.params?.bag?.name + ": " + (discs ? discs?.length + "disc(s)" : "")}`} showButton={true}
                 buttonMethod={editBag} 
                 buttonIcon={<Entypo name="edit" size={30} color={"#FFF"}/>}/>
 

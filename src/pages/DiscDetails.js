@@ -119,9 +119,9 @@ export default function DiscDetails({navigation, route}){
             <ScrollView contentContainerStyle={{flexGrow: 1, paddingBottom: "80%"}}>
                 <View style={{flexDirection: "column", padding: "5%"}}>
                     <Text text={`Disc Name: ${disc?.name}`}/>
-                    <Text text={`Disc Name: ${disc?.manufacturer}`}/>
-                    <Text text={`Disc Name: ${disc?.plastic}`}/>
-                    <Text text={`Disc Name: ${disc?.weight}`}/>
+                    <Text text={`Disc Manufacturer: ${disc?.manufacturer}`}/>
+                    <Text text={`Disc Plastic: ${disc?.plastic}`}/>
+                    <Text text={`Disc Weight: ${disc?.weight}`}/>
                 </View>
                 <View style={{height: "15%", width: "100%", flexDirection: "row", padding: "5%"}}>
                     <View style={{flexDirection: "column", width: "20%", marginLeft: "auto", marginRight: "auto"}}>

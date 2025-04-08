@@ -148,6 +148,7 @@ export default function AddBag({navigation, route}){
                 </ColorPicker>
 
                 <MultiSelect
+                    hideSubmitButton={true}
                     items={discArray || []}
                     uniqueKey="id"
                     ref={(comp) => this.multiSelect = comp}
@@ -170,9 +171,10 @@ export default function AddBag({navigation, route}){
                         borderColor: "#D9D9D9",
                         color: "#FFFFFF",
                         verticalAlign: "top",
-                        marginBottom: "5%"
+                        marginBottom: "2%"
                     }}
                 />
+                <Text text={`Characters remaining: ${notes.length}/300`} style={{marginBottom: "3%", marginRight: 0, marginLeft: "auto", fontSize: 12}}/>
                 <Button title="Save Bag" onPress={addBag} style={{marginTop: "5%"}}/>
             </ScrollView>
             {

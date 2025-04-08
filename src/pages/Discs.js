@@ -10,6 +10,7 @@ import { Entypo } from "@expo/vector-icons";
 
 export default function Discs({navigation}){
     const [discs, setDiscs] = useState();
+    const [loadDiscsCalled, setLoadDiscsCalled] = useState(null)
 
     useEffect(() => {
         refreshData()
@@ -33,6 +34,7 @@ export default function Discs({navigation}){
         }
 
         setDiscs(discs)
+        setLoadDiscsCalled(true)
     }
 
     const addDisc = () => {
@@ -63,9 +65,9 @@ export default function Discs({navigation}){
             <Header title={"Discs"} showButton={true} buttonMethod={addDisc} buttonIcon={<AntDesign name="pluscircle" size={30} color={"#FFFFFF"}/>}/>
             
             <ScrollView contentContainerStyle={{flexGrow: 1, paddingBottom: "30%", zIndex: 2}}>
-                {discs == null ? <Text text={"What is this, my DMs? \n\nWhy is it empty? Add a disc"} style={{margin: "auto", fontSize: 36, width: "80%", textAlign: "center"}}/>
+                {discs == null && loadDiscsCalled ? <Text text={"What is this, my DMs? \n\nWhy is it empty? Add a disc"} style={{margin: "auto", fontSize: 36, width: "80%", textAlign: "center"}}/>
                 :
-                Object.entries(discs?.discs)?.map(([key, disc]) => {
+                Object.entries(discs?.discs || [])?.map(([key, disc]) => {
                     return(
                         <Pressable 
                             key={key}

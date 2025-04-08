@@ -121,30 +121,32 @@ export default function FlightCharts({navigation}){
         let circles = []
 
         bagDiscs?.map(disc => {
-            let xStart = xScale(parseFloat(disc?.fade) + parseFloat(disc?.turn))
-            let yStart = yScale(parseFloat(disc?.speed))
+            if(disc?.glide && disc?.turn && disc?.fade && disc?.speed){
+                let xStart = xScale(parseFloat(disc?.fade) + parseFloat(disc?.turn))
+                let yStart = yScale(parseFloat(disc?.speed))
 
-            circles.push(
-                <>
-                    <SVGText
-                        stroke={"#FFF"}
-                        fill={"#FFF"}
-                        x={xStart - 15}
-                        y={yStart - 15}
-                        fontSize={12}
-                    >
-                        {disc?.name}
-                    </SVGText>
-                    <Circle 
-                        key={`${disc?.name}-${disc?.weight}`}
-                        r={12}
-                        x={xStart}
-                        y={yStart}
-                        stroke={fromHsv(disc?.color) || "#FF00FF"}
-                        fill={fromHsv(disc.color) || "FF00FF"}
-                        strokeWidth={2}
-                    />
-            </>)
+                circles.push(
+                    <>
+                        <SVGText
+                            stroke={"#FFF"}
+                            fill={"#FFF"}
+                            x={xStart - 15}
+                            y={yStart - 15}
+                            fontSize={12}
+                        >
+                            {disc?.name}
+                        </SVGText>
+                        <Circle 
+                            key={`${disc?.name}-${disc?.weight}`}
+                            r={12}
+                            x={xStart}
+                            y={yStart}
+                            stroke={fromHsv(disc?.color) || "#FF00FF"}
+                            fill={fromHsv(disc.color) || "FF00FF"}
+                            strokeWidth={2}
+                        />
+                </>)
+            }
         })
 
         return circles

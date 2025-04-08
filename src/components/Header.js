@@ -6,7 +6,7 @@ export default function Header({title, showButton=false, buttonMethod, buttonIco
     return (
         <View style={{
                 width: "100%",
-                height: "8%",
+                height: "50px",
                 paddingTop: "15",
                 borderBottomWidth: 1,
                 borderColor: "#CCCCCC",
@@ -16,7 +16,7 @@ export default function Header({title, showButton=false, buttonMethod, buttonIco
                 padding: "2%"
             }}
         >
-            <Text style={{width: "50%", fontSize: 24}} text={title} />
+            <Text style={{width: "80%", fontSize: 24}} text={title} adjustFontSize={true} minScale={1}/>
             {
                 showButton 
                 && 

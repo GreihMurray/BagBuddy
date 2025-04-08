@@ -163,9 +163,10 @@ export default function AddDisc({navigation, route}){
                     <View style={{flexDirection: "row", marginTop: "5%", height: "10%"}}>
                         <TextboxWithLabel 
                             label={"Speed"}
+                            maxLength={5}
                             setValue={setSpeed}
                             value={speed}
-                            inputMode={"numeric"}
+                            inputMode={"tel"}
                             ref={speedRef}
                             returnKey={"next"}
                             submitBehavior={"submit"}
@@ -189,7 +190,8 @@ export default function AddDisc({navigation, route}){
                         />
                         <TextboxWithLabel 
                             label={"Glide"}
-                            inputMode={"decimal"}
+                            inputMode={"tel"}
+                            maxLength={5}
                             setValue={setGlide}
                             ref={glideRef}
                             value={glide}
@@ -216,6 +218,7 @@ export default function AddDisc({navigation, route}){
                         <TextboxWithLabel 
                             label={"Turn"}
                             inputMode={"tel"}
+                            maxLength={5}
                             setValue={setTurn}
                             ref={turnRef}
                             returnKey={"next"}
@@ -241,7 +244,8 @@ export default function AddDisc({navigation, route}){
                         />
                         <TextboxWithLabel 
                             label={"Fade"}
-                            inputMode={"numeric"}
+                            inputMode={"tel"}
+                            maxLength={5}
                             setValue={setFade}
                             ref={fadeRef}
                             returnKey={"next"}
@@ -290,10 +294,11 @@ export default function AddDisc({navigation, route}){
                             borderWidth: 2,
                             borderColor: "#D9D9D9",
                             verticalAlign: "top",
-                            marginBottom: "5%",
+                            marginBottom: "2%",
                             color: "#FFF"
                         }}
                     />
+                    <Text text={`Characters remaining: ${notes.length}/300`} style={{marginBottom: "3%", marginRight: 0, marginLeft: "auto", fontSize: 12}}/>
                     <Button title="Save Disc" onPress={addDisc} style={{marginTop: "5%"}}/>
                 </ScrollView>
             </GestureHandlerRootView>
