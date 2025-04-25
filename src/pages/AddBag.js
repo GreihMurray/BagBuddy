@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react"
 import { getJsonData, setJsonData } from "../utils/StorageUtils"
 import Header from "../components/Header"
-import { Button, Keyboard, ScrollView, TextInput, View } from "react-native"
+import { Button, Keyboard, TextInput, View } from "react-native"
 import Text from "../components/Text"
 import TextboxWithLabel from "../components/TextBoxWithLabel"
 import { TriangleColorPicker, fromHsv, toHsv } from "../react-native-color-picker/src/index"
 import BottomTab from "../components/BottomTab"
 import MultiSelect from "react-native-multiple-select"
 import ColorPicker, { Panel3, Preview } from "reanimated-color-picker"
+import { GestureHandlerRootView, ScrollView } from "react-native-gesture-handler";
 
 export default function AddBag({navigation, route}){
     const colorPickerRef = useRef(null)
@@ -119,64 +120,67 @@ export default function AddBag({navigation, route}){
     return (
         <View style={{height: "100%"}}>
             <Header title={"Add Bag"}/>
-            <ScrollView contentContainerStyle={{padding: "5%", flexGrow: 1, paddingBottom: "15%"}}>
-                <TextboxWithLabel 
-                    label={"Bag Name"}
-                    setValue={setBagName}
-                    value={bagName}
-                    inputStyle={{height: "60%", maxHeight: "60%", minHeight: "60%", fontSize: 16}}
-                />
-                
-                <Text style={{marginRight: "auto", marginLeft: "auto", marginTop: 20}}>Bag Color</Text>
-                <ColorPicker
-                    onCompleteJS={onColorChange}
-                    value={originalColor}
-                    style={{
-                        width: 200,
-                        height: 200,
-                        borderRadius: 10,
-                        marginBottom: "18%",
-                        marginTop: "3%",
-                        marginRight: "auto",
-                        marginLeft: "auto"
-                    }}>
-                    <Panel3/>
-                    <View style={{borderColor: "#000", margin: "6%"}}>
-                        <Preview style={{height: "45%"}} disableOpacityTexture hideInitialColor/>
-                    </View>
+            <GestureHandlerRootView>
+                <ScrollView contentContainerStyle={{padding: "5%", flexGrow: 1, paddingBottom: "45%"}}>
+                    <TextboxWithLabel 
+                        label={"Bag Name"}
+                        setValue={setBagName}
+                        value={bagName}
+                        inputStyle={{height: "60%", maxHeight: "60%", minHeight: "60%", fontSize: 16}}
+                    />
                     
-                </ColorPicker>
+                    <Text style={{marginRight: "auto", marginLeft: "auto", marginTop: 20}}>Bag Color</Text>
+                    <ColorPicker
+                        onCompleteJS={onColorChange}
+                        value={originalColor}
+                        style={{
+                            width: 200,
+                            height: 200,
+                            borderRadius: 10,
+                            marginBottom: "18%",
+                            marginTop: "3%",
+                            marginRight: "auto",
+                            marginLeft: "auto"
+                        }}>
+                        <Panel3/>
+                        <View style={{borderColor: "#000", margin: "6%"}}>
+                            <Preview style={{height: "45%"}} disableOpacityTexture hideInitialColor/>
+                        </View>
+                        
+                    </ColorPicker>
 
-                <MultiSelect
-                    hideSubmitButton={true}
-                    items={discArray || []}
-                    uniqueKey="id"
-                    ref={(comp) => this.multiSelect = comp}
-                    selectedItems={selectedDiscs}
-                    selectText="Add discs to bag"
-                    displayKey="name"
-                    onSelectedItemsChange={(e) => setSelectedDiscs(e)}
-                />
+                    <MultiSelect
+                        hideSubmitButton={true}
+                        hideTags
+                        items={discArray || []}
+                        uniqueKey="id"
+                        ref={(comp) => this.multiSelect = comp}
+                        selectedItems={selectedDiscs}
+                        selectText="Add discs to bag"
+                        displayKey="name"
+                        onSelectedItemsChange={(e) => setSelectedDiscs(e)}
+                    />
 
-                <Text text="Notes"/>
-                <TextInput
-                    multiline
-                    maxLength={300}
-                    onChangeText={(value) => setNotes(value)}
-                    numberOfLines={8}
-                    value={notes}
-                    style={{
-                        height: "20%",
-                        borderWidth: 2,
-                        borderColor: "#D9D9D9",
-                        color: "#FFFFFF",
-                        verticalAlign: "top",
-                        marginBottom: "2%"
-                    }}
-                />
-                <Text text={`Characters remaining: ${notes.length}/300`} style={{marginBottom: "3%", marginRight: 0, marginLeft: "auto", fontSize: 12}}/>
-                <Button title="Save Bag" onPress={addBag} style={{marginTop: "5%"}}/>
-            </ScrollView>
+                    <Text text="Notes"/>
+                    <TextInput
+                        multiline
+                        maxLength={300}
+                        onChangeText={(value) => setNotes(value)}
+                        numberOfLines={8}
+                        value={notes}
+                        style={{
+                            height: "20%",
+                            borderWidth: 2,
+                            borderColor: "#D9D9D9",
+                            color: "#FFFFFF",
+                            verticalAlign: "top",
+                            marginBottom: "2%"
+                        }}
+                    />
+                    <Text text={`Characters remaining: ${notes.length}/300`} style={{marginBottom: "3%", marginRight: 0, marginLeft: "auto", fontSize: 12}}/>
+                    <Button title="Save Bag" onPress={addBag} style={{marginTop: "5%"}}/>
+                </ScrollView>
+            </GestureHandlerRootView>
             {
                 !keyboardOpen &&  
                 <BottomTab navigation={navigation}/>

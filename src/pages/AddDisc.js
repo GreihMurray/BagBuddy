@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { fromHsv, toHsv } from "../react-native-color-picker/src/index"
 import { getJsonData, setJsonData } from "../utils/StorageUtils";
 import { GestureHandlerRootView, ScrollView } from "react-native-gesture-handler";
-import ColorPicker, { BrightnessSlider, colorKit, OpacitySlider, Panel3, Preview, PreviewText, SaturationSlider } from "reanimated-color-picker";
+import ColorPicker, { BrightnessSlider, InputWidget, Panel3, Preview, } from "reanimated-color-picker";
 
 export default function AddDisc({navigation, route}){
     const colorPickerRef = useRef(null)
@@ -123,7 +123,7 @@ export default function AddDisc({navigation, route}){
         <View style={{height: "100%"}}>
             <Header title={"Add Disc"}/>
             <GestureHandlerRootView>
-                <ScrollView contentContainerStyle={{padding: "5%", flexGrow: 1, paddingBottom: "80%"}}>
+                <ScrollView contentContainerStyle={{padding: "5%", flexGrow: 1, paddingBottom: "90%"}}>
                     <TextboxWithLabel 
                         label={"Disc Name"}
                         setValue={setDiscName}
@@ -249,7 +249,7 @@ export default function AddDisc({navigation, route}){
                             setValue={setFade}
                             ref={fadeRef}
                             returnKey={"next"}
-                            submitBehavior={"blurAndSubmit"}
+                            // submitBehavior={"blurAndSubmit"}
                             value={fade}
                             labelStyle={{
                                 marginLeft: "auto",
@@ -270,17 +270,18 @@ export default function AddDisc({navigation, route}){
                             width: 200,
                             height: 200,
                             borderRadius: 10,
-                            marginBottom: "12%",
+                            marginBottom: "18%",
                             marginTop: "3%",
                             marginRight: "auto",
                             marginLeft: "auto"
                         }}>
                         <Panel3/>
-                        <View style={{borderColor: "#000", margin: "6%"}}>
-                            <Preview style={{height: "45%"}} disableOpacityTexture hideInitialColor/>
-                        </View>
-                        
+                        <View style={{margin: "5%"}}>
+                            <BrightnessSlider style={{marginBottom: "5%"}}/>
+                            <Preview hideInitialColor={true}/>  
+                        </View>                 
                     </ColorPicker>
+
                     <Text text={"Notes"}/>
                     <TextInput
                         multiline

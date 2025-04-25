@@ -11,6 +11,7 @@ import Text from "../components/Text";
 
 export default function Bags({navigation}){
     const [bags, setBags] = useState(null);
+    const [bagsListEmpty, setBagsListEmpty] = useState(false)
     const [loadBagsCalled, setLoadBagsCalled] = useState(false)
 
     useEffect(() => {
@@ -19,7 +20,11 @@ export default function Bags({navigation}){
 
     const refreshData = async () => {
         let bags = await getJsonData("all-bags")
-        
+
+        if(bags == null || Object.keys(bags.bags).length < 1){
+            setBagsListEmpty(true)
+        }
+
         setBags(bags)
         setLoadBagsCalled(true)
     }
@@ -50,7 +55,7 @@ export default function Bags({navigation}){
             }/>
             
             <ScrollView contentContainerStyle={{flexGrow: 1, paddingBottom: "30%", zIndex: 2}}>
-                {bags == null && loadBagsCalled ? <Text text={"What is this, my DMs? \n\nWhy is it empty? Add a Bag"} style={{margin: "auto", fontSize: 36, width: "80%", textAlign: "center"}}/>
+                {bagsListEmpty && loadBagsCalled ? <Text text={"What is this, my DMs? \n\nWhy is it empty? Add a Bag"} style={{margin: "auto", fontSize: 36, width: "80%", textAlign: "center"}}/>
                 :
                 Object.entries(bags?.bags || [])?.map(([key, bag]) => {
                     return(

@@ -10,7 +10,10 @@ import { Entypo } from "@expo/vector-icons";
 
 export default function Discs({navigation}){
     const [discs, setDiscs] = useState();
+    const [discListEmpty, setDiscListEmpty] = useState(false) 
     const [loadDiscsCalled, setLoadDiscsCalled] = useState(null)
+    const [totalDiscs, setTotalDiscs] = useState(0)
+    const [offset, setOffset] = useState(0)
 
     useEffect(() => {
         refreshData()
@@ -18,19 +21,29 @@ export default function Discs({navigation}){
 
     const refreshData = async () => {
         let discs = await getJsonData("all-discs")
-
-        let sorted = Object.entries(discs?.discs).sort(
-            (a, b) => (a[0].name < b[0].name) ? -1 : 1
-        ).map((v) => {
-            return {
-                [v[0]]: v[1]
-            }
-        }).reduce((a, v) => ({...a, ...v}))
-
-        discs = {
-            discs : {
-                ...sorted
-            }
+        
+        // if(discs != null){
+        //     let sorted = Object.entries(discs?.discs).sort(
+        //         (a, b) => (a[0].name < b[0].name) ? -1 : 1
+        //     ).map((v) => {
+        //         return {
+        //             [v[0]]: v[1]
+        //         }
+        //     }).reduce((a, v) => ({...a, ...v}))
+    
+        //     discs = {
+        //         discs : {
+        //             ...sorted
+        //         }
+        //     }  
+        // }
+        
+        if(discs == null || Object.keys(discs.discs).length < 1){
+            setDiscListEmpty(true)
+        } else{
+            let totalDiscs = Object.keys(discs?.discs).length
+            setOffset((5 * totalDiscs))
+            setTotalDiscs(totalDiscs)
         }
 
         setDiscs(discs)
@@ -51,21 +64,21 @@ export default function Discs({navigation}){
 
     const deleteDisc = async (key) => {
         if(Object.keys(discs.discs).length == 1){
-            discs = null;
+            await setJsonData("all-discs", {discs: {}})
         } else{
             delete discs.discs[key];
+            await setJsonData("all-discs", discs)
         }
         
-        await setJsonData("all-discs", discs)
         refreshData()
     }
 
     return(
         <View style={{height: "100%"}}>
-            <Header title={"Discs"} showButton={true} buttonMethod={addDisc} buttonIcon={<AntDesign name="pluscircle" size={30} color={"#FFFFFF"}/>}/>
+            <Header title={`Discs | ${totalDiscs} total`} showButton={true} buttonMethod={addDisc} buttonIcon={<AntDesign name="pluscircle" size={30} color={"#FFFFFF"}/>}/>
             
-            <ScrollView contentContainerStyle={{flexGrow: 1, paddingBottom: "30%", zIndex: 2}}>
-                {discs == null && loadDiscsCalled ? <Text text={"What is this, my DMs? \n\nWhy is it empty? Add a disc"} style={{margin: "auto", fontSize: 36, width: "80%", textAlign: "center"}}/>
+            <ScrollView contentContainerStyle={{flexGrow: 1, paddingBottom: `${offset}%`, zIndex: 2}}>
+                {discListEmpty && loadDiscsCalled ? <Text text={"What is this, my DMs? \n\nWhy is it empty? Add a disc"} style={{margin: "auto", fontSize: 36, width: "80%", textAlign: "center"}}/>
                 :
                 Object.entries(discs?.discs || [])?.map(([key, disc]) => {
                     return(
@@ -79,7 +92,7 @@ export default function Discs({navigation}){
                                 borderRadius: 5,
                                 overflow: "hidden",
                                 marginTop: 5,
-                                height: "10%",
+                                height: "70",
                                 display: "flex",
                                 flexDirection: "row",
                             }]}

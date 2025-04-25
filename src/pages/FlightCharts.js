@@ -12,6 +12,8 @@ export default function FlightCharts({navigation}){
     const [bags, setBags] = useState()
     const [selectedBag, setSelectedBag] = useState(null)
     const [bagDiscs, setBagDiscs] = useState()
+    const [maxX, setMaxX] = useState(6)
+    const [minX, setMinX] = useState(-6)
 
     const HEIGHT = 570
     const WIDTH = 430
@@ -50,13 +52,13 @@ export default function FlightCharts({navigation}){
     const getGrid = () => {
         let elements = [] 
 
-        let boxWidth = WIDTH / 11
+        let boxWidth = WIDTH / (Math.abs(maxX) + Math.abs(minX))
 
-        const xScale = d3.scaleLinear().domain([-6, 6]).range([WIDTH, 3])
+        const xScale = d3.scaleLinear().domain([minX, maxX]).range([WIDTH, 3])
         const yScale = d3.scaleLinear().domain([0, 16]).nice().range([HEIGHT, 5]).nice()
 
         for(let row = 1; row <= 16; row++){
-            for(let col = -6; col <= 6; col++){
+            for(let col = minX; col <= maxX; col++){
                 elements.push(
                     <Rect 
                         id={`${row}-${col}`}
@@ -87,7 +89,7 @@ export default function FlightCharts({navigation}){
             )
         }
 
-        for(let i = -5; i <= 5; i++){
+        for(let i = minX + 1; i <= maxX - 1; i++){
             elements.push(
                 <SVGText
                     id={`grid-${i}`}
@@ -110,8 +112,21 @@ export default function FlightCharts({navigation}){
             return
         }
 
-        let xMin = -6
-        let xMax = 6
+        for(let disc of bagDiscs){
+            let stability = parseFloat(disc?.turn || 0) + parseFloat(disc?.fade || 0);
+            if(stability < minX){
+                setMinX(stability)
+            } else if(stability > maxX){
+                setMaxX(stability)
+            } else if(stability == maxX){
+                setMaxX(maxX + 1)
+            } else if(stability == minX){
+                setMinX(minX - 1)
+            }
+        }
+
+        let xMin = minX
+        let xMax = maxX
         let yMin = 0
         let yMax = 16
 
