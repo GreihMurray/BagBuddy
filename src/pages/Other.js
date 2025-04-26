@@ -5,7 +5,7 @@ import * as FileSystem from "expo-file-system"
 import * as DocumentPicker from "expo-document-picker"
 import Header from "../components/Header";
 import { getJsonData, setJsonData } from "../utils/StorageUtils";
-import * as data from "../../package.json";
+import * as data from "../../app.json";
 
 export default function Other({navigation}){
     const {StorageAccessFramework} = FileSystem
@@ -100,7 +100,7 @@ export default function Other({navigation}){
                         })
                     }
             </View>
-            <Text text={`Current Version: ${data.version}`} style={{margin: "auto", marginBottom: "70"}}/>
+            <Text text={`Current Version: ${data.expo.version}`} style={{margin: "auto", marginBottom: "70"}}/>
             <BottomTab navigation={navigation} />
         </>
     )
