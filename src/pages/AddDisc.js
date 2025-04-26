@@ -121,7 +121,7 @@ export default function AddDisc({navigation, route}){
 
     return (
         <View style={{height: "100%"}}>
-            <Header title={"Add Disc"}/>
+            <Header title={isEdit ? "Edit Disc" : "Add Disc"}/>
             <GestureHandlerRootView>
                 <ScrollView contentContainerStyle={{padding: "5%", flexGrow: 1, paddingBottom: "90%"}}>
                     <TextboxWithLabel 

@@ -119,7 +119,7 @@ export default function AddBag({navigation, route}){
 
     return (
         <View style={{height: "100%"}}>
-            <Header title={"Add Bag"}/>
+            <Header title={isEdit ? "Edit Bag" : "Add Bag"}/>
             <GestureHandlerRootView>
                 <ScrollView contentContainerStyle={{padding: "5%", flexGrow: 1, paddingBottom: "45%"}}>
                     <TextboxWithLabel 

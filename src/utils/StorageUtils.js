@@ -42,8 +42,23 @@ export async function getDiscsInBag(bagKey){
                 let allDiscs = JSON.parse(allDiscsRaw)
 
                 for(const disc of tempBagDiscs){
-                    bagDiscs.push(allDiscs?.discs[disc])
+                    if(Object.keys(allDiscs?.discs).includes(disc)){
+                        bagDiscs.push(allDiscs?.discs[disc])
+                    } else{
+                        tempBagDiscs.splice(tempBagDiscs.indexOf(disc), 1)
+                    }
                 }
+
+                let newBags = {
+                    bags: {
+                        ...jsonData,
+                        [bagKey]: [
+                            ...tempBagDiscs
+                        ]
+                    }
+                }
+
+                setJsonData("all-bags", newBags)
 
                 return bagDiscs
             }

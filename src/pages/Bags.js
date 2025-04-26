@@ -69,7 +69,7 @@ export default function Bags({navigation}){
                                 borderRadius: 5,
                                 overflow: "hidden",
                                 marginTop: 5,
-                                height: "10%",
+                                height: "70",
                                 display: "flex",
                                 flexDirection: "row",
                             }]}
