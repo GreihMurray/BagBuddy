@@ -35,6 +35,7 @@ export async function getDiscsInBag(bagKey){
 
             let allDiscsRaw = await AsyncStorage.getItem("all-discs").then((result) => {return result})
             
+            console.log(jsonData)
 
             if(allDiscsRaw == null) {
                 return []
@@ -52,11 +53,17 @@ export async function getDiscsInBag(bagKey){
                 let newBags = {
                     bags: {
                         ...jsonData,
-                        [bagKey]: [
-                            ...tempBagDiscs
-                        ]
+                        [bagKey]: 
+                        {
+                            ...jsonData[bagKey],
+                            discs: [
+                                ...tempBagDiscs
+                            ]
+                        }
                     }
                 }
+
+                console.log(newBags)
 
                 setJsonData("all-bags", newBags)
 
